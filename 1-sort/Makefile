@@ -8,9 +8,9 @@ CFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o sorts_bib.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
-HFILES = sorts_bib.h
+HFILES = sorts_bib.hpp
 # Koncowy plik wykonywalny.
-TARGET = main.exe
+TARGET = main.out
 
 # Definicja domyslnej reguly wzorcowej.
 # $< oznacza nazwe pliku pierwszej zaleznosci reguly.
