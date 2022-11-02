@@ -32,7 +32,22 @@ public:
     // usage:   ArrayList<int> list2(list1);
     ArrayList(ArrayList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   ArrayList<int> list2(std::move(list1));
-    ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
+    ArrayList& operator=(const ArrayList& other) // copy assignment operator, return *this
+    {
+        if (*this == &other)
+        {
+            return *this;
+        }
+        delete [] tab;
+        last = other.size();
+        msize = other.max_size();
+        tab = new T[msize];
+        assert(tab != nullptr);
+        std::copy(other.tab, other.tab+last, tab);
+        
+
+        return *this
+    }
     // usage:   list2 = list1; NIEOBOWIAZKOWE
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
     // usage:   list2 = std::move(list1);
