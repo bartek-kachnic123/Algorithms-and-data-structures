@@ -6,7 +6,7 @@ void testPush_Front() {
 
 
     // add more elements;
-    for (int i = 1; i < 10; ++i)
+    for (int i = 1; i < x; ++i)
     {
         arr1.push_front(i);
     }
@@ -34,6 +34,31 @@ void testCopy_constructor()
     std::cout << "Test copy constructor: " << std::endl;
     std::cout << "x: " << x << std::endl;
     std::cout << "y: " << y << std::endl;
+}
+
+void testCopyAssigment() {
+    ArrayList<int> arr1, arr2;
+    const int x = arr1.max_size();
+    const int y = arr2.max_size();
+
+
+
+    // add more elements;
+    for (int i = 1; i < x; ++i)
+    {
+        arr1.push_front(i);
+    }
+
+    for (int i = y; i > 0; --i)
+    {
+        arr2.push_front(i);
+    }
+
+    std::cout << "Before copy assigment: " << std::endl;
+    std::cout << "arr1 : " << arr1 << std::endl;
+    std::cout << "arr2 : " << arr2 << std::endl;
+    arr1 = arr2;
+    std::cout << "After copy assigment arr1: " << arr1 << std::endl;
 }
 
 void testPush_Back()
@@ -169,6 +194,8 @@ void run_ArrayListTests()
     testPush_Front();
     std::cout << std::endl;
     testCopy_constructor();
+    std::cout << std::endl;
+    testCopyAssigment();
     std::cout << std::endl;
     testPush_Back();
     std::cout << std::endl;

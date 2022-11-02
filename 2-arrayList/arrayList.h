@@ -34,7 +34,7 @@ public:
     // usage:   ArrayList<int> list2(std::move(list1));
     ArrayList& operator=(const ArrayList& other) // copy assignment operator, return *this
     {
-        if (*this == &other)
+        if (this == &other)
         {
             return *this;
         }
@@ -46,7 +46,7 @@ public:
         std::copy(other.tab, other.tab+last, tab);
         
 
-        return *this
+        return *this;
     }
     // usage:   list2 = list1; NIEOBOWIAZKOWE
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
