@@ -6,7 +6,7 @@ CC = g++
 LIBS =
 CFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstaja z plikow *.cpp.
-OBJECTS = main.o singlist.o
+OBJECTS = main.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
 HFILES = singlist.h
 # Koncowy plik wykonywalny.
