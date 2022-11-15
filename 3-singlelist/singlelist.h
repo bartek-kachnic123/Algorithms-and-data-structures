@@ -28,20 +28,15 @@ public:
 
     SingleList(const SingleList &other) // copy constructor
     {
-        if (other.head == nullptr)
+        
+        head = tail = nullptr;
+        SingleNode<T> *node = other.head;
+        while (node)
         {
-            head = tail = nullptr;
+            push_back(node->value);
+            node = node->next;
         }
-        else
-        {
-            head = tail = nullptr;
-            SingleNode<T> *node = other.head;
-            while (node)
-            {
-                push_back(node->value);
-                node = node->next;
-            }
-        }
+        
     }
 
     // usage:   SingleList<int> list2(list1);
@@ -195,6 +190,35 @@ void SingleList<T>::clear()
     {
         pop_front();
     }
+}
+
+template <typename T>
+int SingleList<T>::size() const
+{
+    int size = 0;
+    SingleNode<T> *node = head;
+    while(node)
+    {
+        node = node->next;
+        ++size;
+    }
+    return size;
+}
+
+template <typename T>
+void SingleList<T>::reverse()
+{
+    SingleNode<T> *current = head;
+    SingleNode<T> *prev=nullptr, *next=nullptr;
+    tail = head;
+    while(current)
+    {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+    head = prev;
 }
 
 #endif
