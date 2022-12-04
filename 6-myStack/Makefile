@@ -10,7 +10,7 @@ OBJECTS = main.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
 HFILES = myStack.h
 # Koncowy plik wykonywalny.
-TARGET = main.exe
+TARGET = main.out
 
 # Definicja domyslnej reguly wzorcowej.
 # $< oznacza nazwe pliku pierwszej zaleznosci reguly.
