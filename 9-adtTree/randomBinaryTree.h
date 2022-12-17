@@ -45,6 +45,7 @@ public:
     void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
     T  sum() { return sum(root); }
+    T iter_sum();
 
     // Metody bezpośrednio odwołujące się do node.
     // Mogą działać na poddrzewie.
@@ -181,4 +182,24 @@ T RandomBinaryTree<T>::sum(BSTNode<T> *node)
     return node->value + sum(node->left) + sum(node->right);
 }
 
+template <typename T>
+T RandomBinaryTree<T>::iter_sum()
+{
+    
+    if (root == nullptr) return T();
+    std::stack<BSTNode<T>*> S; // wskaźniki do węzłów
+    BSTNode<T> *node = root;
+    T sum = T();
+    S.push(node);
+    while (!S.empty()) {
+        node = S.top(); // podglądamy
+        S.pop();        // usuwamy ze stosu
+        sum += node->value; 
+        if (node->right != nullptr) // najpierw prawe poddrzewo!
+            S.push(node->right);
+        if (node->left != nullptr)
+            S.push(node->left);
+    }
+    return sum;
+}
 #endif
