@@ -3,6 +3,7 @@
 
 #include <algorithm> // make_heap, push_heap,
 #include <iostream>
+#include <vector>
 
 template <typename T>
 class MyPriorityQueue
@@ -57,19 +58,23 @@ MyPriorityQueue<T> &MyPriorityQueue<T>::operator=(const MyPriorityQueue &other) 
     if (this == &other)
         return *this;
 
-    lst.reserve(other.lst.capacity());
+    if (lst.capacity() < other.lst.capacity())
+        lst.reserve(other.lst.capacity());
+
     lst = other.lst;
 
     return *this;
 }
 
 template <typename T>
-MyPriorityQueue<T> &MyPriorityQueue<T>::operator=(MyPriorityQueue &&other); // move assignment operator, return *this
+MyPriorityQueue<T> &MyPriorityQueue<T>::operator=(MyPriorityQueue &&other) // move assignment operator, return *this
 {
     if (this == &other)
         return *this;
 
-    lst.reserve(other.lst.capacity());
+    if (lst.capacity() < other.lst.capacity)
+        lst.reserve(other.lst.capacity());
+
     lst = std::move(other.lst);
 
     return *this;
@@ -78,11 +83,16 @@ MyPriorityQueue<T> &MyPriorityQueue<T>::operator=(MyPriorityQueue &&other); // m
 template <typename T>
 void MyPriorityQueue<T>::display()
 {
-    for (T &elem : lst)
+    std::vector<T> lst_copy = lst;
+    while(!lst_copy.empty())
     {
-        std::cout << elem << " ";
+        std::pop_heap(lst_copy.begin(), lst_copy.end());
+
+        std::cout << lst_copy.back() << " ";
+        lst_copy.pop_back();
     }
     std::cout << std::endl;
+
 }
 
 #endif
