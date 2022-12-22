@@ -44,8 +44,8 @@ public:
     void bfs(); // przejście poziomami (wszerz)
     void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
-    T  sum() { return sum(root); }
-    T iter_sum();
+    T  calc_total() { return calc_total(root); }
+    T iter_calc_total();
 
     // Metody bezpośrednio odwołujące się do node.
     // Mogą działać na poddrzewie.
@@ -60,7 +60,7 @@ public:
         assert(node != nullptr);
         std::cout << "visiting " << node->value << std::endl;
     }
-    T sum(BSTNode<T> *node);
+    T calc_total(BSTNode<T> *node);
 };
 // Wyświetlanie obróconego (counterclockwise) drzewa binarnego.
 template <typename T>
@@ -175,15 +175,15 @@ void RandomBinaryTree<T>::clear(BSTNode<T> *node)
 }
 
 template <typename T>
-T RandomBinaryTree<T>::sum(BSTNode<T> *node)
+T RandomBinaryTree<T>::calc_total(BSTNode<T> *node)
 {
     if (node == nullptr) return T();
     
-    return node->value + sum(node->left) + sum(node->right);
+    return node->value + calc_total(node->left) + calc_total(node->right);
 }
 
 template <typename T>
-T RandomBinaryTree<T>::iter_sum()
+T RandomBinaryTree<T>::iter_calc_total()
 {
     
     if (root == nullptr) return T();
