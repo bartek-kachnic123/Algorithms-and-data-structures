@@ -11,7 +11,7 @@ class Poly {
     public:
         // constructors
         Poly();
-        Poly(T.. args);
+        Poly(T... factors); // variadic template
         Poly(T factors[]);
         // destructor
         ~Poly();
