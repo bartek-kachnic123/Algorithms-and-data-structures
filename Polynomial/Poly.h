@@ -7,6 +7,7 @@
 template<typename T>
 class Poly {
     T *factors; // factors of x from [x^0, x^1 to x^n]
+    int size;
 
     public:
         // constructors
