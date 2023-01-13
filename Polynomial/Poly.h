@@ -22,7 +22,7 @@ class Poly {
         Poly(Poly&& polynomial);
         
         // methods
-        T Horner();
+        T Horner(T x);
         void clear();
         bool is_zero();
 
@@ -80,6 +80,16 @@ Poly<T>::Poly(T factors[], int _size) :
     }
 }
 
+template<typename T> // maybe other type for x?
+T Poly<T>::Horner(T x) {
+
+    T result = factors[0];
+    for (int i = 1; i < size; ++i) {
+        result = result * x + factors[i];
+    }
+
+    return result;
+}
 
 template<typename T>
 Poly<T>::~Poly() {
