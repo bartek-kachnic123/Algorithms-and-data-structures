@@ -92,6 +92,10 @@ void Poly<T>::clear() {
     factors = nullptr;
 }
 
-
+template<typename T>
+T& Poly<T>::operator[](int index) {
+    assert(-1 < index < size);
+    return factors[index];
+}
 
 #endif
