@@ -93,6 +93,11 @@ void Poly<T>::clear() {
 }
 
 template<typename T>
+bool Poly<T>::is_zero() {
+    return (size == 1) ? true : false;
+}
+
+template<typename T>
 T& Poly<T>::operator[](int index) {
     assert(-1 < index < size);
     return factors[index];
