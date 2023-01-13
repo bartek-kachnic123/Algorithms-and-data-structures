@@ -27,19 +27,31 @@ class Poly {
         bool is_zero();
 
         // operators 2 args
-        Poly<T> operator+(const Poly<T>& polynomial);
-        Poly<T> operator-(const Poly<T>& polynomial);
-        Poly<T>& operator*(const Poly<T>& polynomial);
-        bool operator==(const Poly<T>& polynomial);
-        bool operator!=(const Poly<T>& polynomial);
-        Poly<T>& operator=(const Poly<T>& polynomial);
-        Poly<T>& operator=(Poly<T>&& polynomial);
+        Poly<T> operator+(const Poly<T>& poly);
+        Poly<T> operator-(const Poly<T>& poly);
+        Poly<T>& operator*(const Poly<T>& poly);
+        bool operator==(const Poly<T>& poly);
+        bool operator!=(const Poly<T>& poly);
+        Poly<T>& operator=(const Poly<T>& poly);
+        Poly<T>& operator=(Poly<T>&& poly);
 
         // operators 1 args
         T& operator[](int index);
 
         // friend operators
-        friend std::ostream& operator<<(std::ostream& os, Poly<T>& polynomial);
+        friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
+            os << poly.factors[0];
+            for (int i = 1; i < poly.size; ++i){
+                if (poly.factors[i] <= 0) {
+                     os << poly.factors[i] << "x^" << i;
+                    }
+                else {
+                    os << '+' << poly.factors[i] << "x^" << i;
+                    }
+            }
+
+             return os;
+        }
 
 };
 
@@ -79,6 +91,7 @@ void Poly<T>::clear() {
     delete []factors;
     factors = nullptr;
 }
+
 
 
 #endif
