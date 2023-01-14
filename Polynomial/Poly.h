@@ -19,7 +19,7 @@ class Poly {
         // destructor
         ~Poly();
 
-        Poly(Poly& polynomial);
+        Poly(const Poly& polynomial);
         Poly(Poly&& polynomial);
         
         // methods
@@ -82,6 +82,16 @@ Poly<T>::Poly(T factors[], int _size) :
         std::copy(factors, factors+size, this->factors);
     }
 }
+
+template<typename T>
+Poly<T>::Poly(const Poly& poly) :
+            size(poly.size)
+{
+    factors = new T[size];
+    assert(factors!=nullptr);
+    std::copy(poly.factors, poly.factors+size, factors);
+}
+
 
 template<typename T> // maybe other type for x?
 T Poly<T>::Horner(T x) {
