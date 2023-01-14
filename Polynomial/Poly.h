@@ -45,9 +45,14 @@ class Poly {
             if (poly.is_zero() || (double) poly[0] != 1.00)
                 os << poly[0];
 
-            int x_power = poly.size - 1;
+            int x_power = poly.size;
             for (int i = 1; i < poly.size; ++i){
-                os << "x^" << x_power--;
+
+                --x_power;
+                if ((double) poly[i] == 0.0)
+                    continue;
+
+                os << "x^" << x_power;
 
                 if (poly[i] > 0) 
                     os << '+';

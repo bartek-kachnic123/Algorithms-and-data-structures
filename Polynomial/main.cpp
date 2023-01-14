@@ -20,8 +20,8 @@ void test_constructors() {
 
 void test_copyConstructor() {
     std::cout << "Test copy constructor: " << std::endl;
-    int arr[] = {1, 2, 3};
-    Poly<int> polynomial_1(arr, 3);
+    int arr[] = {1, 2, 0,  3, 0};
+    Poly<int> polynomial_1(arr, 5);
     Poly<int> polynomial_copy(polynomial_1);
     std::cout << "1: " << polynomial_1 << std::endl;
     std::cout << "2: " << polynomial_copy << std::endl;
@@ -30,8 +30,8 @@ void test_copyConstructor() {
 
 void test_Horner() {
     std::cout << "Test Horner: " << std::endl;
-    int arr[] = {1, 2, 3};
-    Poly<int> polynomial_1(arr, 3);
+    int arr[] = {1, 2, 0, 2};
+    Poly<int> polynomial_1(arr, 4);
     int result = polynomial_1.Horner(2);
     std::cout << result << std::endl;
 }
