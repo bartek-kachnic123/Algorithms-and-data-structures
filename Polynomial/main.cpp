@@ -25,10 +25,22 @@ void test_Horner() {
     int result = polynomial_1.Horner(2);
     std::cout << result << std::endl;
 }
+
+void test_addOperator() {
+    std::cout << "Test add operator: " << std::endl;
+    double arr[] = {1, 2, 3};
+    double arr2[] = {1.9, 1.2};
+
+    Poly<double> polynomial_1(arr, 3);
+    Poly<double> polynomial_2(arr2, 2);
+
+    std::cout << "Added: " << polynomial_1 + polynomial_2 << std::endl;
+}
 int main()
 {
     test_constructors();
     test_Horner();
+    test_addOperator();
 
 
 
