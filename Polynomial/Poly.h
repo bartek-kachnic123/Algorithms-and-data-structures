@@ -8,7 +8,7 @@
 
 template<typename T>
 class Poly {
-    T *factors; // factors of x from [x^0, x^1 to x^n]
+    T *factors; // factors of x from [x^n, x^(n-1)... x^0]
     int size;
 
     public:
@@ -19,8 +19,8 @@ class Poly {
         // destructor
         ~Poly();
 
-        Poly(const Poly& polynomial);
-        Poly(Poly&& polynomial);
+        Poly(const Poly& poly);
+        Poly(Poly&& poly);
         
         // methods
         T Horner(T x);
@@ -37,23 +37,23 @@ class Poly {
         Poly<T>& operator=(Poly<T>&& poly);
 
         // operators 1 args
-        T& operator[](int index);
+        T& operator[](int index) const;
 
         // friend operators
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
 
-            if (poly.is_zero() || (double) poly.factors[0] != 1.00)
-                os << poly.factors[0];
+            if (poly.is_zero() || (double) poly[0] != 1.00)
+                os << poly[0];
 
             int x_power = poly.size - 1;
             for (int i = 1; i < poly.size; ++i){
                 os << "x^" << x_power--;
 
-                if (poly.factors[i] > 0) 
+                if (poly[i] > 0) 
                     os << '+';
                     
-                if ((double) poly.factors[i] != 1.00 || i == poly.size-1)
-                    os << poly.factors[i];
+                if ((double) poly[i] != 1.00 || i == poly.size-1)
+                    os << poly[i];
             }
 
             return os;
@@ -133,7 +133,7 @@ Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
     if (size > poly.size) {
         std::copy(factors, factors + size, arr);
         for (int i = 0; i < min_size; ++i) {
-            arr[i + diff_size] += poly.factors[i];
+            arr[i + diff_size] += poly[i];
         }
     }
     else {
@@ -154,8 +154,8 @@ Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
 
 
 template<typename T>
-T& Poly<T>::operator[](int index) {
-    assert(-1 < index < size);
+T& Poly<T>::operator[](int index) const {
+    assert(-1 < index  && index < size);
     return factors[index];
 }
 
