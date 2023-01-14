@@ -153,7 +153,19 @@ Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
 }
 
 
-    
+template<typename T>
+Poly<T>& Poly<T>::operator=(const Poly<T>& poly){
+
+    if (this == &poly) return *this;
+
+    clear();
+    factors = new T[poly.size];
+    assert(factors!=nullptr);
+
+    size = poly.size;
+    std::copy(poly.factors, poly.factors+size, factors);
+}
+
 
 
 

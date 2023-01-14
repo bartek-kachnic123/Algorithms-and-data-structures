@@ -28,6 +28,15 @@ void test_copyConstructor() {
     
 }
 
+void test_copyAssigment() {
+    std::cout << "Test copy assigment: " << std::endl;
+    int arr[] = {1, 2, 0,  3, 0};
+    Poly<int> polynomial_1(arr, 5);
+    Poly<int> polynomial_copy = polynomial_1;
+    std::cout << "1: " << polynomial_1 << std::endl;
+    std::cout << "2: " << polynomial_copy << std::endl;
+}
+
 void test_Horner() {
     std::cout << "Test Horner: " << std::endl;
     int arr[] = {1, 2, 0, 2};
@@ -50,6 +59,7 @@ int main()
 {
     test_constructors();
     test_copyConstructor();
+    test_copyAssigment();
     test_Horner();
     test_addOperator();
 
