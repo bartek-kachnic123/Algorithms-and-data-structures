@@ -17,9 +17,18 @@ void test_constructors() {
 
     std::cout << "Test passed!" << std::endl;
 }
+
+void test_Horner() {
+    std::cout << "Test Horner: " << std::endl;
+    int arr[] = {1, 2, 3};
+    Poly<int> polynomial_1(arr, 3);
+    int result = polynomial_1.Horner(2);
+    std::cout << result << std::endl;
+}
 int main()
 {
     test_constructors();
+    test_Horner();
 
 
 
