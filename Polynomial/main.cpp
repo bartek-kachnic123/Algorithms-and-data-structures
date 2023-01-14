@@ -37,6 +37,24 @@ void test_copyAssigment() {
     std::cout << "2: " << polynomial_copy << std::endl;
 }
 
+void test_equalOperator() {
+    std::cout << "Test equal operator: " << std::endl;
+    double arr1[] = {1, 2, 3};
+    double arr2[] = {1, 2, 3};
+    Poly<double> poly1(arr1, 3);
+    Poly<double> poly2(arr2, 3);
+    assert(poly1 == poly2);
+
+    double arr3[] = {1, 2, -2};
+    Poly<double> poly3(arr3, 3);
+    assert(poly3 == poly1);
+
+    double arr4[] = {1, 10, 2};
+    Poly<double> poly4(arr4, 3);
+    assert(poly4 != poly1);
+
+    std::cout << "Test passed!" << std::endl;
+}
 void test_Horner() {
     std::cout << "Test Horner: " << std::endl;
     int arr[] = {1, 2, 0, 2};
@@ -87,6 +105,7 @@ int main()
     test_constructors();
     test_copyConstructor();
     test_copyAssigment();
+    test_equalOperator();
     test_Horner();
     test_addOperator();
     test_subtractOperator();

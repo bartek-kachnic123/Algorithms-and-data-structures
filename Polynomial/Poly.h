@@ -218,6 +218,19 @@ Poly<T> Poly<T>::operator-(const Poly<T>& poly){
 
 }
 
+template<typename T>
+bool Poly<T>::operator==(const Poly<T>& poly){
+    Poly<T> diff_poly = *this - poly;
+    return diff_poly.is_zero();
+}
+
+template<typename T>
+bool Poly<T>::operator!=(const Poly<T>& poly){
+    Poly<T> diff_poly = *this - poly;
+    return !(diff_poly.is_zero());
+}
+
+
 
 template<typename T>
 Poly<T>& Poly<T>::operator=(const Poly<T>& poly){
