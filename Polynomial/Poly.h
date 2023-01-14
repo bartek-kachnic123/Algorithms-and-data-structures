@@ -25,7 +25,7 @@ class Poly {
         // methods
         T Horner(T x);
         void clear();
-        bool is_zero();
+        bool is_zero() const;
 
         // operators 2 args
         Poly<T> operator+(const Poly<T>& poly);
@@ -41,16 +41,19 @@ class Poly {
 
         // friend operators
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
-            os << poly.factors[0];
+
+            if (poly.is_zero() || (double) poly.factors[0] != 1.00)
+                os << poly.factors[0];
+
             int x_power = poly.size - 1;
-            
             for (int i = 1; i < poly.size; ++i){
                 os << "x^" << x_power--;
 
-                if (poly.factors[i] > 0) {
-                        os << '+';
-                    }
-                os << poly.factors[i];
+                if (poly.factors[i] > 0) 
+                    os << '+';
+                    
+                if ((double) poly.factors[i] != 1.00 || i == poly.size-1)
+                    os << poly.factors[i];
             }
 
             return os;
@@ -116,7 +119,7 @@ void Poly<T>::clear() {
 }
 
 template<typename T>
-bool Poly<T>::is_zero() {
+bool Poly<T>::is_zero() const {
     return (size == 1) ? true : false;
 }
 
