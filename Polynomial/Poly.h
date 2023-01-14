@@ -42,16 +42,18 @@ class Poly {
         // friend operators
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
             os << poly.factors[0];
+            int x_power = poly.size - 1;
+            
             for (int i = 1; i < poly.size; ++i){
-                if (poly.factors[i] <= 0) {
-                     os << poly.factors[i] << "x^" << i;
+                os << "x^" << x_power--;
+
+                if (poly.factors[i] > 0) {
+                        os << '+';
                     }
-                else {
-                    os << '+' << poly.factors[i] << "x^" << i;
-                    }
+                os << poly.factors[i];
             }
 
-             return os;
+            return os;
         }
 
 };
