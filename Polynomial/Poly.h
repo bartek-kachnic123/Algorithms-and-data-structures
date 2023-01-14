@@ -81,7 +81,7 @@ template<typename T>
 Poly<T>::Poly(T factors[], int _size) :
             size(_size)          
 {
-    if (size == 0) {
+    if (size <= 0) {
         Poly();
     }
     else {
@@ -149,6 +149,54 @@ Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
     }
 
     return Poly<T>(arr, std::max(size, poly.size));
+}
+
+template<typename T>
+Poly<T> Poly<T>::operator-(const Poly<T>& poly){
+
+    int diff_size = std::abs(size - poly.size);
+    int min_size = std::min(size, poly.size);
+    T *arr = nullptr;
+
+    if (size == poly.size) {
+
+        int i;
+        for(i=0; i < min_size - 1; ++i) {
+            if (factors[i] - poly[i] != T())
+                break;
+        }
+
+        arr = new T[min_size - i];
+        assert(arr != nullptr);
+
+        for (int j = 0; j < min_size - i; ++j)
+            arr[j] = factors[j+i] - poly[j+i];
+        return Poly<T>(arr, min_size - i);
+    }
+    else if (size > poly.size) {
+
+        arr = new T[size];
+        assert(arr!=nullptr);
+
+        std::copy(factors, factors + size, arr);
+        for (int i = 0; i < min_size; ++i) 
+            arr[i + diff_size] -= poly[i];
+        
+    }
+    else {
+        arr = new T[poly.size];
+        assert(arr != nullptr);
+
+        for (int i = 0; i < poly.size; ++i) {
+            if (i < diff_size)
+                arr[i] = (-poly[i]);
+            else arr[i] = factors[i-diff_size] - poly[i];
+        }
+    }
+        
+
+    return Poly<T>(arr, std::max(size, poly.size));
+
 
 }
 

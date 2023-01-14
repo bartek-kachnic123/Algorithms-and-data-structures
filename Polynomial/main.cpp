@@ -55,6 +55,33 @@ void test_addOperator() {
 
     std::cout << "Added: " << polynomial_1 + polynomial_2 << std::endl;
 }
+void test_subtractOperator() {
+    std::cout << "Test substract operator: " << std::endl;
+    double arr[] = {1, 2, 3};
+    double arr2[] = {1.9, 1.2, 1};
+
+    Poly<double> polynomial_1(arr, 3);
+    Poly<double> polynomial_2(arr2, 3);
+
+    std::cout << "Subtracted: " << polynomial_1 - polynomial_2 << std::endl;
+
+    Poly<double> polynomial_3 = polynomial_1;
+    std::cout << "Subtracted: " << polynomial_3 - polynomial_1 << std::endl;
+
+    double arr4[] = {1.9, 1.2, 4};
+    Poly<double> polynomial_4(arr4, 3);
+    std::cout << "Subtracted: " << polynomial_2 - polynomial_4 << std::endl;
+
+    double arr5[] = {1, 9, 0.5, 0, 19};
+    Poly<double> polynomial_5(arr5, 5);
+    std::cout << "Subtracted: " << polynomial_5 - polynomial_1 << std::endl;
+
+    std::cout << "Subtracted: " << polynomial_1 - polynomial_5 << std::endl;
+
+
+
+
+}
 int main()
 {
     test_constructors();
@@ -62,6 +89,7 @@ int main()
     test_copyAssigment();
     test_Horner();
     test_addOperator();
+    test_subtractOperator();
 
 
 
