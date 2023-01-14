@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <cmath>
 #include <array>
 
 template<typename T>
@@ -106,6 +107,36 @@ template<typename T>
 bool Poly<T>::is_zero() {
     return (size == 1) ? true : false;
 }
+
+template<typename T>
+Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
+
+    int diff_size = std::abs(size - poly.size);
+    int min_size = std::min(size, poly.size);
+    T* arr = new T[std::max(size, poly.size)];
+
+    if (size > poly.size) {
+        std::copy(factors, factors + size, arr);
+        for (int i = 0; i < min_size; ++i) {
+            arr[i + diff_size] += poly.factors[i];
+        }
+    }
+    else {
+        std::copy(poly.factors, poly.factors + poly.size, arr);
+        for (int i = 0; i < min_size; ++i) {
+            arr[i + diff_size] += factors[i];
+        }
+    }
+
+    return Poly<T>(arr, std::max(size, poly.size));
+
+}
+
+
+    
+
+
+
 
 template<typename T>
 T& Poly<T>::operator[](int index) {
