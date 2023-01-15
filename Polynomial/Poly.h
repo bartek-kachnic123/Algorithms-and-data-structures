@@ -28,11 +28,11 @@ class Poly {
         bool is_zero() const;
 
         // operators 2 args
-        Poly<T> operator+(const Poly<T>& poly);
-        Poly<T> operator-(const Poly<T>& poly);
-        Poly<T>& operator*(const Poly<T>& poly);
-        bool operator==(const Poly<T>& poly);
-        bool operator!=(const Poly<T>& poly);
+        Poly<T> operator+(const Poly<T>& poly) const;
+        Poly<T> operator-(const Poly<T>& poly) const;
+        Poly<T> operator*(const Poly<T>& poly) const;
+        bool operator==(const Poly<T>& poly) const;
+        bool operator!=(const Poly<T>& poly) const;
         Poly<T>& operator=(const Poly<T>& poly);
         Poly<T>& operator=(Poly<T>&& poly);
 
@@ -138,7 +138,7 @@ bool Poly<T>::is_zero() const {
 }
 
 template<typename T>
-Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
+Poly<T> Poly<T>::operator+(const Poly<T>& poly) const {
 
     Poly<T> new_poly(true);
     
@@ -164,7 +164,7 @@ Poly<T> Poly<T>::operator+(const Poly<T>& poly) {
 }
 
 template<typename T>
-Poly<T> Poly<T>::operator-(const Poly<T>& poly){
+Poly<T> Poly<T>::operator-(const Poly<T>& poly) const {
 
     Poly<T> new_poly(true);
 
@@ -219,13 +219,18 @@ Poly<T> Poly<T>::operator-(const Poly<T>& poly){
 }
 
 template<typename T>
-bool Poly<T>::operator==(const Poly<T>& poly){
+Poly<T> Poly<T>::operator*(const Poly<T>& poly) const {
+    return Poly<T>();
+}
+
+template<typename T>
+bool Poly<T>::operator==(const Poly<T>& poly) const {
     Poly<T> diff_poly = *this - poly;
     return diff_poly.is_zero();
 }
 
 template<typename T>
-bool Poly<T>::operator!=(const Poly<T>& poly){
+bool Poly<T>::operator!=(const Poly<T>& poly) const{
     Poly<T> diff_poly = *this - poly;
     return !(diff_poly.is_zero());
 }
