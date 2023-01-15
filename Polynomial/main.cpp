@@ -55,6 +55,7 @@ void test_equalOperator() {
 
     std::cout << "Test passed!" << std::endl;
 }
+
 void test_Horner() {
     std::cout << "Test Horner: " << std::endl;
     int arr[] = {1, 2, 0, 2};
@@ -95,10 +96,18 @@ void test_subtractOperator() {
     std::cout << "Subtracted: " << polynomial_5 - polynomial_1 << std::endl;
 
     std::cout << "Subtracted: " << polynomial_1 - polynomial_5 << std::endl;
+}
 
+void test_multiplyOperator() {
+    std::cout << "Test multiply operator: " << std::endl;
+    double arr[] = {1, -2, 3};
+    double arr2[] = {1, -2, 3};
 
+    Poly<double> polynomial_1(arr, 3);
+    Poly<double> polynomial_2(arr2, 3);
 
-
+    std::cout << "Multiply : " << polynomial_1 *  polynomial_2 << std::endl;
+    std::cout << "Multiply: " << polynomial_1 * polynomial_1 * polynomial_1 << std::endl;
 }
 int main()
 {
@@ -109,6 +118,7 @@ int main()
     test_Horner();
     test_addOperator();
     test_subtractOperator();
+    test_multiplyOperator();
 
 
 

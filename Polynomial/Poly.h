@@ -220,7 +220,19 @@ Poly<T> Poly<T>::operator-(const Poly<T>& poly) const {
 
 template<typename T>
 Poly<T> Poly<T>::operator*(const Poly<T>& poly) const {
-    return Poly<T>();
+    
+    Poly<T> new_poly(true);
+    new_poly.size = size + poly.size - 1;
+    new_poly.factors = new T[new_poly.size];
+    assert(new_poly.factors!=nullptr);
+
+    std::fill(new_poly.factors, new_poly.factors + new_poly.size, T());
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < poly.size; ++j) {
+            new_poly.factors[i+j] += factors[i] * poly.factors[j];
+        }
+    }
+    return new_poly;
 }
 
 template<typename T>
