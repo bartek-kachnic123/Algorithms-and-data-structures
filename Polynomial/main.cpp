@@ -27,6 +27,19 @@ void test_copyConstructor() {
     std::cout << "2: " << polynomial_copy << std::endl;
     
 }
+void test_moveConstructor() {
+    std::cout << "Test move constructor " << std::endl;
+
+    double arr[] = {1, 2, 3, 4};
+    Poly<double> polynomial_1(arr, 4);
+    Poly<double> polynomial_2(std::move(polynomial_1));
+
+    for (int i=0; i < 4; ++i) {
+        assert(arr[i] == polynomial_2[i]);
+    }
+    std::cout << "Test 1 passed!" << std::endl;
+
+}
 
 void test_copyAssigment() {
     std::cout << "Test copy assigment: " << std::endl;
@@ -35,6 +48,23 @@ void test_copyAssigment() {
     Poly<int> polynomial_copy = polynomial_1;
     std::cout << "1: " << polynomial_1 << std::endl;
     std::cout << "2: " << polynomial_copy << std::endl;
+}
+
+void test_moveAssigment() {
+    std::cout << "Test move assigment: " << std::endl;
+    double arr[] = {1.5, 1.2, 0.0, 1.2};
+    Poly<double> polynomial_1(arr, 4);
+    arr[0] = 1.24;
+    Poly<double> polynomial_2(arr, 4);
+
+    polynomial_2 = std::move(polynomial_1);
+    arr[0] = 1.5;
+    for (int i = 0; i < 4; ++i) {
+        assert(arr[i] == polynomial_2[i]);
+    }
+    std::cout << "Test 1 passed!" << std::endl;
+
+
 }
 
 void test_equalOperator() {
@@ -113,7 +143,9 @@ int main()
 {
     test_constructors();
     test_copyConstructor();
+    test_moveConstructor();
     test_copyAssigment();
+    test_moveAssigment();
     test_equalOperator();
     test_Horner();
     test_addOperator();

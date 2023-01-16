@@ -76,10 +76,9 @@ class Poly {
 };
 
 template<typename T>
-Poly<T>::Poly() :
-            size(1)
-            
+Poly<T>::Poly()
 {
+    size = 1;
     coeffs = new T[size];
     assert(coeffs!=nullptr);
 
@@ -109,8 +108,20 @@ Poly<T>::Poly(const Poly& other) :
     std::copy(other.coeffs, other.coeffs+size, coeffs);
 }
 
+template<typename T> // move constructor
+Poly<T>::Poly(Poly<T>&& other){
 
-template<typename T> // maybe other type for x?
+    Poly(true); //empty poly
+    std::swap(coeffs, other.coeffs);
+    std::swap(size, other.size);
+}
+
+template<typename T>
+Poly<T>::~Poly() {
+    clear();
+}
+
+template<typename T> 
 T Poly<T>::Horner(T x) {
 
     T result = coeffs[0];
@@ -121,15 +132,13 @@ T Poly<T>::Horner(T x) {
     return result;
 }
 
-template<typename T>
-Poly<T>::~Poly() {
-    clear();
-}
+
 
 template<typename T>
 void Poly<T>::clear() {
     delete []coeffs;
     coeffs = nullptr;
+    
 }
 
 template<typename T>
@@ -260,6 +269,20 @@ Poly<T>& Poly<T>::operator=(const Poly<T>& other){
 
     size = other.size;
     std::copy(other.coeffs, other.coeffs+size, coeffs);
+}
+
+template<typename T>
+Poly<T>& Poly<T>::operator=(Poly<T>&& other){
+    if (this == &other) return *this;
+    if (coeffs != nullptr)
+        delete[] coeffs;
+
+    coeffs = std::move(other.coeffs);
+    size = other.size;
+    other.coeffs = nullptr;
+    other.size = 0;
+    
+    return *this;
 }
 
 
