@@ -13,9 +13,16 @@ void test_constructors() {
     Poly<double> polynomial_2(arr, sizeof(arr)/sizeof(arr[0]));
     std::cout << polynomial_2 << std::endl;
 
-    Poly<int> polynomial_3({}, 0);
+    
 
     std::cout << "Test passed!" << std::endl;
+
+    //double arr2[][2] = {{1, 1.233}, {9, {1.2342}}};
+    //Poly<double> polynomial_4(arr2, 2);
+    //std::cout << polynomial_4 << std::endl;
+    std::map<int,double> mapData = {{1, 9.22}, {3, 3.6}, {4, 7}};
+    Poly<double> polynomial_4(mapData);
+    std::cout << polynomial_4 << std::endl;
 }
 
 void test_copyConstructor() {

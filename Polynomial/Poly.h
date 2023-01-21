@@ -4,7 +4,7 @@
 #include <iostream>
 #include <cassert>
 #include <cmath>
-#include <array>
+#include <map>
 
 template<typename T>
 class Poly {
@@ -15,6 +15,7 @@ class Poly {
         // constructors
         Poly();
         Poly(const T* coeffs, int _size);
+        Poly(std::map<int, T> &coeffsMap);
 
         // destructor
         ~Poly();
@@ -42,23 +43,32 @@ class Poly {
         // friend operators
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
 
-            if (poly.is_zero() || poly[0] != T(1))
+            if (poly.is_zero()) {
                 os << poly[0];
+                return os;
+            }
 
             int x_power = poly.size;
-            for (int i = 1; i < poly.size; ++i){
+            for (int i = 0; i < poly.size; ++i){
 
                 --x_power;
-                if (poly[i] == T())
+
+                if (poly[i] == T()) {
                     continue;
+                }
 
-                os << "x^" << x_power;
-
-                if (poly[i] > 0) 
+                if (poly[i] > 0 && i > 0) 
                     os << '+';
                     
                 if (poly[i] != T(1) || i == poly.size-1)
                     os << poly[i];
+
+                if (x_power == 0)
+                    continue;
+                else if (x_power == 1) 
+                    os << "x";
+                else os << "x^" << x_power;
+
             }
 
             return os;
@@ -100,6 +110,29 @@ Poly<T>::Poly(const T* coeffs, int _size) :
 }
 
 template<typename T>
+Poly<T>::Poly(std::map<int, T> &coeffsMap){
+    if (coeffsMap.empty())
+        Poly();
+    else {
+
+        int xPower = (--coeffsMap.end())->first; //map is sorted
+        size = xPower + 1;
+
+        this->coeffs = new T[size];
+        assert(this->coeffs!=nullptr);
+
+        std::fill(this->coeffs, this->coeffs+size, T());
+        for (int i = xPower; i >= 0; --i) 
+            if (coeffsMap.find(i) != coeffsMap.end()) 
+                this->coeffs[xPower - i] = coeffsMap[i];
+        for (int i = 0; i < size; ++i) {
+            std::cout << coeffs[i] << " ";
+        }
+        std::cout << std::endl;
+}
+}
+
+template<typename T>
 Poly<T>::Poly(const Poly& other) :
             size(other.size)
 {
@@ -111,9 +144,11 @@ Poly<T>::Poly(const Poly& other) :
 template<typename T> // move constructor
 Poly<T>::Poly(Poly<T>&& other){
 
-    Poly(true); //empty poly
-    std::swap(coeffs, other.coeffs);
-    std::swap(size, other.size);
+    coeffs = other.coeffs;
+    size = other.size;
+
+    other.coeffs = nullptr;
+    other.size = 0;
 }
 
 template<typename T>
@@ -138,7 +173,7 @@ template<typename T>
 void Poly<T>::clear() {
     delete []coeffs;
     coeffs = nullptr;
-    
+
 }
 
 template<typename T>
