@@ -20,7 +20,7 @@ void test_constructors() {
     //double arr2[][2] = {{1, 1.233}, {9, {1.2342}}};
     //Poly<double> polynomial_4(arr2, 2);
     //std::cout << polynomial_4 << std::endl;
-    std::map<int,double> mapData = {{1, 9.22}, {3, 3.6}, {4, 7}};
+    std::map<unsigned int,double> mapData = {{1, 9.22}, {3, 3.6}, {4, 7}};
     Poly<double> polynomial_4(mapData);
     std::cout << polynomial_4 << std::endl;
 }
@@ -82,7 +82,7 @@ void test_equalOperator() {
     Poly<double> poly2(arr2, 3);
     assert(poly1 == poly2);
 
-    double arr3[] = {1, 2, -2};
+    double arr3[] = {1, 2, 3};
     Poly<double> poly3(arr3, 3);
     assert(poly3 == poly1);
 
@@ -97,7 +97,7 @@ void test_Horner() {
     std::cout << "Test Horner: " << std::endl;
     int arr[] = {1, 2, 0, 2};
     Poly<int> polynomial_1(arr, 4);
-    int result = polynomial_1.Horner(2);
+    int result = polynomial_1.calcValue(2);
     std::cout << result << std::endl;
 }
 

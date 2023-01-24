@@ -14,8 +14,8 @@ class Poly {
     public:
         // constructors
         Poly();
-        Poly(const T* coeffs, int _size);
-        Poly(std::map<int, T> &coeffsMap);
+        Poly(const T* coeffs, unsigned int _size);
+        Poly(std::map<unsigned int, T> &coeffsMap);
 
         // destructor
         ~Poly();
@@ -24,7 +24,7 @@ class Poly {
         Poly(Poly&& other);
         
         // methods
-        T Horner(T x);
+        T calcValue(T x);
         void clear();
         bool is_zero() const;
 
@@ -43,7 +43,7 @@ class Poly {
         // friend operators
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
 
-            if (poly.is_zero()) {
+            if (poly.size == 1) {
                 os << poly[0];
                 return os;
             }
@@ -96,10 +96,10 @@ Poly<T>::Poly()
 }
 
 template<typename T>
-Poly<T>::Poly(const T* coeffs, int _size) :
+Poly<T>::Poly(const T* coeffs, unsigned int _size) :
             size(_size)          
 {
-    if (size <= 0) {
+    if (size == 0) {
         Poly();
     }
     else {
@@ -110,7 +110,7 @@ Poly<T>::Poly(const T* coeffs, int _size) :
 }
 
 template<typename T>
-Poly<T>::Poly(std::map<int, T> &coeffsMap){
+Poly<T>::Poly(std::map<unsigned int, T> &coeffsMap){
     if (coeffsMap.empty())
         Poly();
     else {
@@ -125,11 +125,7 @@ Poly<T>::Poly(std::map<int, T> &coeffsMap){
         for (int i = xPower; i >= 0; --i) 
             if (coeffsMap.find(i) != coeffsMap.end()) 
                 this->coeffs[xPower - i] = coeffsMap[i];
-        for (int i = 0; i < size; ++i) {
-            std::cout << coeffs[i] << " ";
-        }
-        std::cout << std::endl;
-}
+    }
 }
 
 template<typename T>
@@ -157,7 +153,7 @@ Poly<T>::~Poly() {
 }
 
 template<typename T> 
-T Poly<T>::Horner(T x) {
+T Poly<T>::calcValue(T x) {
 
     T result = coeffs[0];
     for (int i = 1; i < size; ++i) {
@@ -171,14 +167,16 @@ T Poly<T>::Horner(T x) {
 
 template<typename T>
 void Poly<T>::clear() {
-    delete []coeffs;
-    coeffs = nullptr;
-
+    if (coeffs != nullptr) {
+        delete []coeffs;
+        coeffs = nullptr;
+    }
+    size = 0;
 }
 
 template<typename T>
 bool Poly<T>::is_zero() const {
-    return (size == 1) ? true : false;
+    return (coeffs[0] == T()) ? true : false;
 }
 
 template<typename T>
@@ -319,9 +317,6 @@ Poly<T>& Poly<T>::operator=(Poly<T>&& other){
     
     return *this;
 }
-
-
-
 
 
 template<typename T>
