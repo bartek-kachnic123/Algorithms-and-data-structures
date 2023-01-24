@@ -48,6 +48,9 @@ I.     Implementacja wielomianów na bazie tablic (szablon, współczynniki typu
 -> operator!= (porównanie wielomianów) - zwraca true, jeśli różnica 
   wielomianów nie jest równa wielomianowi zerowemu, w przeciwnym wypadku
   zwraca false.
+  
+-> operator[] (int index) - zwraca współczynnik o wybranym indeksie z 
+  przedziału 0 <= index < size . Od największej potęgi do najmniejszej.
 
 -> operator<< (wyświetlanie) - wyświetla wielomian w kolejności od
   największej potęgi do najmniejszej.
