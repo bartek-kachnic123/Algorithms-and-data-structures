@@ -149,7 +149,10 @@ Poly<T>::Poly(Poly<T>&& other){
 
 template<typename T>
 Poly<T>::~Poly() {
-    clear();
+    if (coeffs != nullptr)
+    {
+        delete []coeffs;
+    }
 }
 
 template<typename T> 
@@ -171,12 +174,19 @@ void Poly<T>::clear() {
         delete []coeffs;
         coeffs = nullptr;
     }
-    size = 0;
+
+    size = 1;
+    coeffs = new T[size];
+    assert(coeffs!=nullptr);
+    coeffs[0] = T();
 }
 
 template<typename T>
 bool Poly<T>::is_zero() const {
-    return (coeffs[0] == T()) ? true : false;
+    for (int i = 0; i < size; ++i) 
+        if (coeffs[i] != T()) 
+            return false;
+    return true;
 }
 
 template<typename T>
@@ -215,7 +225,7 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
 
     if (size == other.size) {
 
-        int i;
+        int i; // count start
         for(i=0; i < min_size - 1; ++i) {
             if (coeffs[i] - other[i] != T())
                 break;
@@ -228,7 +238,6 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
         for (int j = 0; j < min_size - i; ++j)
             new_poly.coeffs[j] = coeffs[j+i] - other[j+i];
 
-        return new_poly;
     }
     else if (size > other.size) {
 
@@ -296,7 +305,7 @@ Poly<T>& Poly<T>::operator=(const Poly<T>& other){
 
     if (this == &other) return *this;
 
-    clear();
+    delete [] coeffs;
     coeffs = new T[other.size];
     assert(coeffs!=nullptr);
 

@@ -21,10 +21,16 @@ I.     Implementacja wielomianów na bazie tablic (szablon, współczynniki typu
 
 -> Poly() - (konstruktor domyślny) - tworzy nowy wielomian zerowy o
   wartości domyślnej typu T.
-  
+
 -> Poly(const T* coeffs, unsigned size) - konstruktor tworzy nowy
-  wielomian o współczynnikach podanych w tablicy T * coeefs. Jeśli 
-  size jest równy 0 używa domyślnego konstruktora.
+  wielomian o współczynnikach podanych w tablicy T * coeefs.
+  Od największej potęgi do najmniejszej. Jeśli size jest równy 0 
+  używa domyślnego konstruktora.
+
+-> Poly(std::map<unsigned int, T> &coeffsMap) - konstruktor tworzy nowy
+  wielomian o współczynnikach podanych w parach <unsigned int, T> gdzie
+  T to wartość współczynnika, a unsigned int to  odpowiadająca mu potęga.
+  W przypadku pustej mapy używa domyślnego konstruktora.
 
 -> operator+ (dodawanie wielomianów) - zwraca nowy wielomian, który
   jest sumą dwóch wybranych wielomianów.
@@ -50,10 +56,10 @@ I.     Implementacja wielomianów na bazie tablic (szablon, współczynniki typu
     oblicza wartośc za pomocą algorytmu Hornera i  zwraca wartość 
     wielomianu o typie T.
 
--> clear()  - 
+-> clear()  - usuwa wszystkie współczynniki i ustawia wielomian jako zerowy.
 
 -> is_zero() - funkcja zwraca true, jeśli wielomian jest wielomianem zerowym
-  (posiada tylko 1 współczynnik przy potędze 0), w przeciwnym wypadku
+  (wszystkie współczynniki są  równe  0), w przeciwnym wypadku
   zwraca false.
 
 ========================================================================    
