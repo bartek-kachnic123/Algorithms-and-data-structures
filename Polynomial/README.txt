@@ -69,7 +69,7 @@ I.     Implementacja wielomianów na bazie tablic (szablon, współczynniki typu
 * Jak uruchomic program:
 =========================
 
--> Aby uruchomic , nalezy wykonac komende:
+-> Aby skompilować , nalezy wykonac komende:
    a)   make
   
 
