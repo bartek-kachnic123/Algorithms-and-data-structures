@@ -44,7 +44,7 @@ class Poly {
         friend std::ostream& operator<<(std::ostream& os, const Poly<T>& poly) {
 
             if (poly.size == 1) {
-                os << poly[0];
+                os << poly.coeffs[0];
                 return os;
             }
 
@@ -53,15 +53,15 @@ class Poly {
 
                 --x_power;
 
-                if (poly[i] == T()) {
+                if (poly.coeffs[i] == T()) {
                     continue;
                 }
 
-                if (poly[i] > 0 && i > 0) 
+                if (poly.coeffs[i] > 0 && i > 0) 
                     os << '+';
                     
-                if (poly[i] != T(1) || i == poly.size-1)
-                    os << poly[i];
+                if (poly.coeffs[i] != T(1) || i == poly.size-1)
+                    os << poly.coeffs[i];
 
                 if (x_power == 0)
                     continue;
@@ -122,9 +122,10 @@ Poly<T>::Poly(std::map<unsigned int, T> &coeffsMap){
         assert(this->coeffs!=nullptr);
 
         std::fill(this->coeffs, this->coeffs+size, T());
-        for (int i = xPower; i >= 0; --i) 
-            if (coeffsMap.find(i) != coeffsMap.end()) 
-                this->coeffs[xPower - i] = coeffsMap[i];
+        for (auto it = coeffsMap.begin(); it != coeffsMap.end(); ++it) {
+            (*this)[it->first] = it->second;  // [] operator
+
+        }
     }
 }
 
@@ -227,7 +228,7 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
 
         int i; // count start
         for(i=0; i < min_size - 1; ++i) {
-            if (coeffs[i] - other[i] != T())
+            if (coeffs[i] - other.coeffs[i] != T())
                 break;
         }
 
@@ -236,7 +237,7 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
         assert(new_poly.coeffs != nullptr);
 
         for (int j = 0; j < min_size - i; ++j)
-            new_poly.coeffs[j] = coeffs[j+i] - other[j+i];
+            new_poly.coeffs[j] = coeffs[j+i] - other.coeffs[j+i];
 
     }
     else if (size > other.size) {
@@ -247,7 +248,7 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
 
         std::copy(coeffs, coeffs + size, new_poly.coeffs);
         for (int i = 0; i < min_size; ++i) 
-            new_poly.coeffs[i + diff_size] -= other[i];
+            new_poly.coeffs[i + diff_size] -= other.coeffs[i];
         
     }
     else {
@@ -258,8 +259,8 @@ Poly<T> Poly<T>::operator-(const Poly<T>& other) const {
 
         for (int i = 0; i < other.size; ++i) {
             if (i < diff_size)
-                new_poly.coeffs[i] = (-other[i]);
-            else new_poly.coeffs[i] = coeffs[i-diff_size] - other[i];
+                new_poly.coeffs[i] = (-other.coeffs[i]);
+            else new_poly.coeffs[i] = coeffs[i-diff_size] - other.coeffs[i];
         }
     }
         
@@ -331,7 +332,7 @@ Poly<T>& Poly<T>::operator=(Poly<T>&& other){
 template<typename T>
 T& Poly<T>::operator[](int index) const {
     assert(-1 < index  && index < size);
-    return coeffs[index];
+    return coeffs[size - index - 1];
 }
 
 #endif

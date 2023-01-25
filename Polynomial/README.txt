@@ -50,7 +50,7 @@ I.     Implementacja wielomianów na bazie tablic (szablon, współczynniki typu
   zwraca false.
   
 -> operator[] (int index) - zwraca współczynnik o wybranym indeksie z 
-  przedziału 0 <= index < size . Od największej potęgi do najmniejszej.
+  przedziału 0 <= index < size . 
 
 -> operator<< (wyświetlanie) - wyświetla wielomian w kolejności od
   największej potęgi do najmniejszej.

@@ -36,7 +36,7 @@ void test_moveConstructor() {
     Poly<double> polynomial_2(std::move(polynomial_1));
 
     for (int i=0; i < 4; ++i) {
-        assert(arr[i] == polynomial_2[i]);
+        assert(arr[3-i] == polynomial_2[i]);
     }
     std::cout << "Test 1 passed!" << std::endl;
 
@@ -61,7 +61,7 @@ void test_moveAssigment() {
     polynomial_2 = std::move(polynomial_1);
     arr[0] = 1.5;
     for (int i = 0; i < 4; ++i) {
-        assert(arr[i] == polynomial_2[i]);
+        assert(arr[3-i] == polynomial_2[i]);
     }
     std::cout << "Test 1 passed!" << std::endl;
 
