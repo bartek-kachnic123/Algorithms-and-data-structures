@@ -5,7 +5,6 @@
 #define CAPACITY_DECREASE 0.25
 
 #include <iostream>
-#include <cassert>
 
 template<typename T>
 class ArraySet
@@ -43,8 +42,15 @@ ArraySet<T>::ArraySet()
     : current_size(0),
     capacity(DEFAULT_CAPACITY)
 {
-    elements = new T[capacity];
-    assert(elements != nullptr);
+    try
+    {
+        elements = new T[capacity];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+        std::abort();
+    }
 }
 
 template<typename T>
@@ -52,8 +58,16 @@ ArraySet<T>::ArraySet(const ArraySet &other)
     : current_size(other.current_size),
     capacity(other.capacity)
 {
-    elements = new T[capacity];
-    assert(elements != nullptr);
+    try
+    {
+        elements = new T[capacity];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+        std::abort();
+    }
+
     std::copy(other.elements, other.elements+current_size, elements);
 }
 
@@ -74,8 +88,15 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     current_size = other.current_size;
     capacity = other.capacity;
 
-    elements = new T[capacity];
-    assert(elements != nullptr);
+    try
+    {
+        elements = new T[capacity];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+        std::abort();
+    }
 
     std::copy(other.elements, other.elements+current_size, elements);
 }
@@ -119,9 +140,14 @@ void ArraySet<T>::insert(T element) {
         if (isFull()) {
             int new_capacity = capacity * CAPACITY_DECREASE;
 
-            T* tmp_elements = new T[new_capacity];
-            assert(tmp_elements != nullptr);
-
+            T* tmp_elements;
+            try {
+                tmp_elements = new T[new_capacity];
+            }
+            catch(const std::bad_alloc& e) {       
+                std::cerr << e.what() << '\n';
+                std::abort();
+            }
             
         }
     }
