@@ -33,7 +33,8 @@ public:
     ArraySet sum(const ArraySet &other);
     ArraySet difference(const ArraySet &other);
     
-
+private:
+    void allocate_memory();
 
 };
 
@@ -42,15 +43,7 @@ ArraySet<T>::ArraySet()
     : _current_size(0),
     _capacity(DEFAULT_CAPACITY)
 {
-    try
-    {
-        _elements = new T[_capacity];
-    }
-    catch(const std::bad_alloc& e)
-    {
-        std::cerr << e.what() << '\n';
-        std::abort();
-    }
+    allocate_memory();
 }
 
 template<typename T>
@@ -58,16 +51,7 @@ ArraySet<T>::ArraySet(const ArraySet &other)
     : _current_size(other._current_size),
     _capacity(other._capacity)
 {
-    try
-    {
-        _elements = new T[_capacity];
-    }
-    catch(const std::bad_alloc& e)
-    {
-        std::cerr << e.what() << '\n';
-        std::abort();
-    }
-
+    allocate_memory();
     std::copy(other._elements, other._elements+_current_size, _elements);
 }
 
@@ -88,15 +72,7 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     _current_size = other._current_size;
     _capacity = other._capacity;
 
-    try
-    {
-        _elements = new T[_capacity];
-    }
-    catch(const std::bad_alloc& e)
-    {
-        std::cerr << e.what() << '\n';
-        std::abort();
-    }
+    allocate_memory();
 
     std::copy(other._elements, other._elements+_current_size, _elements);
 }
@@ -140,16 +116,23 @@ void ArraySet<T>::insert(T element) {
         if (isFull()) {
             int new_capacity = _capacity * CAPACITY_DECREASE;
 
-            T* tmp_elements;
-            try {
-                tmp_elements = new T[new_capacity];
-            }
-            catch(const std::bad_alloc& e) {       
-                std::cerr << e.what() << '\n';
-                std::abort();
-            }
+            T* tmp_elements = nullptr;
             
         }
+    }
+}
+
+
+template<typename T> 
+void ArraySet<T>::allocate_memory() {
+    try
+    {
+        _elements = new T[_capacity];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+        std::abort();
     }
 }
 
