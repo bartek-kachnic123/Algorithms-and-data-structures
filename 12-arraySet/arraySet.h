@@ -11,9 +11,9 @@ class ArraySet
 {
 private:
     /* data */
-    T* elements;
-    unsigned int current_size;
-    unsigned int capacity;
+    T* _elements;
+    unsigned int _current_size;
+    unsigned int _capacity;
 
 public:
     ArraySet();
@@ -39,12 +39,12 @@ public:
 
 template<typename T>
 ArraySet<T>::ArraySet()
-    : current_size(0),
-    capacity(DEFAULT_CAPACITY)
+    : _current_size(0),
+    _capacity(DEFAULT_CAPACITY)
 {
     try
     {
-        elements = new T[capacity];
+        _elements = new T[_capacity];
     }
     catch(const std::bad_alloc& e)
     {
@@ -55,12 +55,12 @@ ArraySet<T>::ArraySet()
 
 template<typename T>
 ArraySet<T>::ArraySet(const ArraySet &other)
-    : current_size(other.current_size),
-    capacity(other.capacity)
+    : _current_size(other._current_size),
+    _capacity(other._capacity)
 {
     try
     {
-        elements = new T[capacity];
+        _elements = new T[_capacity];
     }
     catch(const std::bad_alloc& e)
     {
@@ -68,14 +68,14 @@ ArraySet<T>::ArraySet(const ArraySet &other)
         std::abort();
     }
 
-    std::copy(other.elements, other.elements+current_size, elements);
+    std::copy(other._elements, other._elements+_current_size, _elements);
 }
 
 template<typename T>
 ArraySet<T>::~ArraySet()
 {
-    if (elements != nullptr)
-        delete []elements;
+    if (_elements != nullptr)
+        delete []_elements;
 }
 
 template<typename T>
@@ -83,14 +83,14 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     if (this == &other)
         return *this;
     
-    delete []elements;
+    delete []_elements;
 
-    current_size = other.current_size;
-    capacity = other.capacity;
+    _current_size = other._current_size;
+    _capacity = other._capacity;
 
     try
     {
-        elements = new T[capacity];
+        _elements = new T[_capacity];
     }
     catch(const std::bad_alloc& e)
     {
@@ -98,22 +98,22 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
         std::abort();
     }
 
-    std::copy(other.elements, other.elements+current_size, elements);
+    std::copy(other._elements, other._elements+_current_size, _elements);
 }
 
 template<typename T>
 inline bool ArraySet<T>::isFull() {
-    return (current_size == capacity) ? true : false;
+    return (_current_size == _capacity) ? true : false;
 }
 
 template<typename T>
 inline bool ArraySet<T>::isEmpty() {
-    return (current_size == 0 ) ? true : false;
+    return (_current_size == 0 ) ? true : false;
 }
 
 template<typename T>
 unsigned int ArraySet<T>::size() {
-    return current_size;
+    return _current_size;
 }
 
 template<typename T>
@@ -138,7 +138,7 @@ template<typename T>
 void ArraySet<T>::insert(T element) {
     if (isMember(element) == -1) {
         if (isFull()) {
-            int new_capacity = capacity * CAPACITY_DECREASE;
+            int new_capacity = _capacity * CAPACITY_DECREASE;
 
             T* tmp_elements;
             try {
