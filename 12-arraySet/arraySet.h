@@ -35,6 +35,7 @@ public:
     
 private:
     void allocate_memory();
+    void resize(int new_capacity);
     int binarySearch(T &element);
 
 
@@ -123,6 +124,26 @@ void ArraySet<T>::allocate_memory() {
         std::cerr << e.what() << '\n';
         std::abort();
     }
+}
+
+template<typename T>
+void ArraySet<T>::resize(int new_capacity) {
+    T* tmp_elements;
+    try {
+        tmp_elements = new T[new_capacity];
+    }
+    catch(const std::bad_alloc& e) {
+        std::cerr << e.what() << '\n';
+        std::abort();
+    }
+
+    _capacity = new_capacity;
+    std::copy(_elements, _elements+_current_size, tmp_elements);
+
+    delete [] _elements;
+    _elements = nullptr;
+
+    _elements = tmp_elements;
 }
 
 template<typename T>
