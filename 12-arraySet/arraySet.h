@@ -9,7 +9,7 @@
 
 
 template<typename T>
-class SortedSet
+class ArraySet
 {
 private:
     /* data */
@@ -18,11 +18,11 @@ private:
     unsigned int capacity;
 
 public:
-    SortedSet();
-    SortedSet(const SortedSet &other);
-    ~SortedSet();
+    ArraySet();
+    ArraySet(const ArraySet &other);
+    ~ArraySet();
 
-    SortedSet& operator=(const SortedSet &other);
+    ArraySet& operator=(const ArraySet &other);
 
     inline bool isFull();
     inline bool isEmpty();
@@ -30,17 +30,17 @@ public:
     int isMember(T element);
     void insert(T element);
     void remove();
-    SortedSet& pop();
-    SortedSet interSection(const SortedSet &other); 
-    SortedSet sum(const SortedSet &other);
-    SortedSet difference(const SortedSet &other);
+    ArraySet& pop();
+    ArraySet interSection(const ArraySet &other); 
+    ArraySet sum(const ArraySet &other);
+    ArraySet difference(const ArraySet &other);
     
 
 
 };
 
 template<typename T>
-SortedSet<T>::SortedSet()
+ArraySet<T>::ArraySet()
     : curr_size(0),
     capacity(DEFAULT_CAPACITY)
 {
@@ -49,7 +49,7 @@ SortedSet<T>::SortedSet()
 }
 
 template<typename T>
-SortedSet<T>::SortedSet(const SortedSet &other)
+ArraySet<T>::ArraySet(const ArraySet &other)
     : curr_size(other.curr_size),
     capacity(other.capacity)
 {
@@ -59,14 +59,14 @@ SortedSet<T>::SortedSet(const SortedSet &other)
 }
 
 template<typename T>
-SortedSet<T>::~SortedSet()
+ArraySet<T>::~ArraySet()
 {
     if (elements != nullptr)
         delete []elements;
 }
 
 template<typename T>
-SortedSet<T>& SortedSet<T>::operator=(const SortedSet &other) {
+ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     if (this == &other)
         return *this;
     
@@ -82,22 +82,22 @@ SortedSet<T>& SortedSet<T>::operator=(const SortedSet &other) {
 }
 
 template<typename T>
-inline bool SortedSet<T>::isFull() {
+inline bool ArraySet<T>::isFull() {
     return (curr_size == capacity) ? true : false;
 }
 
 template<typename T>
-inline bool SortedSet<T>::isEmpty() {
+inline bool ArraySet<T>::isEmpty() {
     return (curr_size == 0 ) ? true : false;
 }
 
 template<typename T>
-unsigned int SortedSet<T>::size() {
+unsigned int ArraySet<T>::size() {
     return curr_size;
 }
 
 template<typename T>
-int SortedSet<T>::isMember(T element) {
+int ArraySet<T>::isMember(T element) {
     int left = 0;
     int right = size() - 1;
     int mid;
@@ -115,7 +115,7 @@ int SortedSet<T>::isMember(T element) {
 }
 
 template<typename T>
-void SortedSet<T>::insert(T element) {
+void ArraySet<T>::insert(T element) {
     if (isMember(element) == -1) {
         if (isFull()) {
             int new_capacity = capacity * CAPACITY_DECREASE;
