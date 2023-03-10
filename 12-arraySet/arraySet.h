@@ -156,7 +156,7 @@ int ArraySet<T>::binarySearch(T &element) {
     int left = 0;
     int right = size() - 1;
     int mid;
-    while(left < right) {
+    while(left <= right) {
         mid = (left + right) / 2;
 
         if (_elements[mid] == element)
