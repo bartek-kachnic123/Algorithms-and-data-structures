@@ -5,6 +5,7 @@
 #define CAPACITY_DECREASE 0.25
 
 #include <iostream>
+#include <algorithm>
 
 template<typename T>
 class ArraySet
@@ -97,18 +98,22 @@ unsigned int ArraySet<T>::size() {
 
 template<typename T>
 bool ArraySet<T>::isMember(T &element) {
-    return (binarySearch() != -1) ? true : false;
+    return (binarySearch(element) != -1) ? true : false;
 }
 
 template<typename T>
 void ArraySet<T>::insert(T element) {
-    if (binarySearch(element) == -1) {
-        if (isFull()) {
-            int new_capacity = _capacity * CAPACITY_DECREASE;
+    if (!isMember(element)) {
 
-            T* tmp_elements = nullptr;
-            
+        if (isFull()) {
+            resize(_capacity * CAPACITY_DECREASE);
         }
+
+        auto pos = std::lower_bound(_elements, _elements+_current_size, element);
+        std::copy_backward(pos,  _elements+_current_size, _elements+_current_size + 1);
+        *pos = element;
+        _current_size++;
+
     }
 }
 
@@ -154,9 +159,9 @@ int ArraySet<T>::binarySearch(T &element) {
     while(left < right) {
         mid = (left + right) / 2;
 
-        if (element[mid] == element)
+        if (_elements[mid] == element)
             return mid;
-        else if (element[mid] > element)
+        else if (_elements[mid] > element)
             right = mid - 1;
         else
             left = mid + 1;
