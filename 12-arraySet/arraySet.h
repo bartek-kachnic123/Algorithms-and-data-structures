@@ -25,7 +25,7 @@ public:
     inline bool isFull();
     inline bool isEmpty();
     unsigned int size();
-    int isMember(T element);
+    bool isMember(T &element);
     void insert(T element);
     void remove();
     ArraySet& pop();
@@ -35,6 +35,8 @@ public:
     
 private:
     void allocate_memory();
+    int binarySearch(T &element);
+
 
 };
 
@@ -93,26 +95,13 @@ unsigned int ArraySet<T>::size() {
 }
 
 template<typename T>
-int ArraySet<T>::isMember(T element) {
-    int left = 0;
-    int right = size() - 1;
-    int mid;
-    while(left < right) {
-        mid = (left + right) / 2;
-
-        if (element[mid] == element)
-            return mid;
-        else if (element[mid] > element)
-            right = mid - 1;
-        else
-            left = mid + 1;
-    }
-    return -1;
+bool ArraySet<T>::isMember(T &element) {
+    return (binarySearch() != -1) ? true : false;
 }
 
 template<typename T>
 void ArraySet<T>::insert(T element) {
-    if (isMember(element) == -1) {
+    if (binarySearch(element) == -1) {
         if (isFull()) {
             int new_capacity = _capacity * CAPACITY_DECREASE;
 
@@ -136,6 +125,23 @@ void ArraySet<T>::allocate_memory() {
     }
 }
 
+template<typename T>
+int ArraySet<T>::binarySearch(T &element) {
+    int left = 0;
+    int right = size() - 1;
+    int mid;
+    while(left < right) {
+        mid = (left + right) / 2;
+
+        if (element[mid] == element)
+            return mid;
+        else if (element[mid] > element)
+            right = mid - 1;
+        else
+            left = mid + 1;
+    }
+    return -1;
+}
 
 
 #endif // ARRAYSET_H
