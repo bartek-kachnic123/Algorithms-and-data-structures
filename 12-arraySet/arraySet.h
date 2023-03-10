@@ -1,5 +1,5 @@
-#if !defined(SORTEDSET_H)
-#define SORTEDSET_H
+#if !defined(ARRAYSET_H)
+#define ARRAYSET_H
 #define DEFAULT_CAPACITY 128
 #define CAPACITY_INCREASE 2
 #define CAPACITY_DECREASE 0.25
@@ -155,4 +155,4 @@ void ArraySet<T>::insert(T element) {
 
 
 
-#endif // SORTEDSET_H
+#endif // ARRAYSET_H
