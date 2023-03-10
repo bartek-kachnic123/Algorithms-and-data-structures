@@ -14,7 +14,7 @@ class ArraySet
 private:
     /* data */
     T* elements;
-    unsigned int curr_size;
+    unsigned int current_size;
     unsigned int capacity;
 
 public:
@@ -41,7 +41,7 @@ public:
 
 template<typename T>
 ArraySet<T>::ArraySet()
-    : curr_size(0),
+    : current_size(0),
     capacity(DEFAULT_CAPACITY)
 {
     elements = new T[capacity];
@@ -50,12 +50,12 @@ ArraySet<T>::ArraySet()
 
 template<typename T>
 ArraySet<T>::ArraySet(const ArraySet &other)
-    : curr_size(other.curr_size),
+    : current_size(other.current_size),
     capacity(other.capacity)
 {
     elements = new T[capacity];
     assert(elements != nullptr);
-    std::copy(other.elements, other.elements+curr_size, elements);
+    std::copy(other.elements, other.elements+current_size, elements);
 }
 
 template<typename T>
@@ -72,28 +72,28 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     
     delete []elements;
 
-    curr_size = other.curr_size;
+    current_size = other.current_size;
     capacity = other.capacity;
 
     elements = new T[capacity];
     assert(elements != nullptr);
 
-    std::copy(other.elements, other.elements+curr_size, elements);
+    std::copy(other.elements, other.elements+current_size, elements);
 }
 
 template<typename T>
 inline bool ArraySet<T>::isFull() {
-    return (curr_size == capacity) ? true : false;
+    return (current_size == capacity) ? true : false;
 }
 
 template<typename T>
 inline bool ArraySet<T>::isEmpty() {
-    return (curr_size == 0 ) ? true : false;
+    return (current_size == 0 ) ? true : false;
 }
 
 template<typename T>
 unsigned int ArraySet<T>::size() {
-    return curr_size;
+    return current_size;
 }
 
 template<typename T>
