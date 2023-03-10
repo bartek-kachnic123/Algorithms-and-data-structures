@@ -7,7 +7,6 @@
 #include <iostream>
 #include <cassert>
 
-
 template<typename T>
 class ArraySet
 {

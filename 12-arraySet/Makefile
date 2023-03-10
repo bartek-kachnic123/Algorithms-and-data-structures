@@ -8,7 +8,7 @@ CFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
-HFILES = sortedSet.h
+HFILES = arraySet.h
 # Koncowy plik wykonywalny.
 TARGET = main.out
 
