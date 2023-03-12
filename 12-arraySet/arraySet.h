@@ -17,7 +17,7 @@ private:
     int _capacity;
 
 public:
-    ArraySet();
+    ArraySet(size_t capacity = DEFAULT_CAPACITY);
     ArraySet(const ArraySet &other);
     ~ArraySet();
 
@@ -26,11 +26,11 @@ public:
     inline bool isFull();
     inline bool isEmpty();
     int size() const;
-    bool isMember(T &element);
+    bool isMember(T &element) const;
     void insert(T element);
     void remove(T element);
     T pop();
-    ArraySet interSection(const ArraySet &other); 
+    ArraySet interSection(const ArraySet &other_set); 
     ArraySet sum(const ArraySet &other);
     ArraySet difference(const ArraySet &other);
 
@@ -38,7 +38,7 @@ public:
 private:
     void allocate_memory();
     void resize(int new_capacity);
-    int binarySearch(T &element);
+    int binarySearch(T &element) const;
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set);
@@ -48,9 +48,9 @@ private:
 };
 
 template<typename T>
-ArraySet<T>::ArraySet()
+ArraySet<T>::ArraySet(size_t capacity)
     : _current_size(0),
-    _capacity(DEFAULT_CAPACITY)
+    _capacity(capacity)
 {
     allocate_memory();
 }
@@ -102,7 +102,7 @@ int ArraySet<T>::size() const{
 }
 
 template<typename T>
-bool ArraySet<T>::isMember(T &element) {
+bool ArraySet<T>::isMember(T &element) const {
     return (binarySearch(element) != -1) ? true : false;
 }
 
@@ -148,6 +148,28 @@ T ArraySet<T>::pop() {
     }
     throw std::runtime_error("Set is empty!");
 }
+
+template<typename T>
+ArraySet<T> ArraySet<T>::interSection(const ArraySet &other_set) {
+    
+    ArraySet<T> new_set(std::min(this->_capacity, other_set._capacity));
+
+    if (this->size() < other_set.size()) {
+        for (int i = 0; i < this->size(); i++) {
+            if (other_set.isMember(this->_elements[i])) 
+                new_set.insert(this->_elements[i]);  
+        }
+    }
+    else {
+        for (int i = 0; i < other_set.size(); i++) {
+            if (this->isMember(other_set._elements[i]))
+                new_set.insert(other_set._elements[i]);
+        }
+    }
+
+    return new_set;
+}
+
 template<typename U>
 std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
     os << "{ ";
@@ -194,7 +216,7 @@ void ArraySet<T>::resize(int new_capacity) {
 }
 
 template<typename T>
-int ArraySet<T>::binarySearch(T &element) {
+int ArraySet<T>::binarySearch(T &element) const {
     int left = 0;
     int right = size() - 1;
     int mid;
