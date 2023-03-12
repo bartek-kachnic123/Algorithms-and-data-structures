@@ -13,8 +13,8 @@ class ArraySet
 private:
     /* data */
     T* _elements;
-    unsigned int _current_size;
-    unsigned int _capacity;
+    int _current_size;
+    int _capacity;
 
 public:
     ArraySet();
@@ -25,7 +25,7 @@ public:
 
     inline bool isFull();
     inline bool isEmpty();
-    unsigned int size();
+    int size() const;
     bool isMember(T &element);
     void insert(T element);
     void remove();
@@ -33,11 +33,16 @@ public:
     ArraySet interSection(const ArraySet &other); 
     ArraySet sum(const ArraySet &other);
     ArraySet difference(const ArraySet &other);
+
     
 private:
     void allocate_memory();
     void resize(int new_capacity);
     int binarySearch(T &element);
+
+    template<typename U>
+    friend std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set);
+
 
 
 };
@@ -92,7 +97,7 @@ inline bool ArraySet<T>::isEmpty() {
 }
 
 template<typename T>
-unsigned int ArraySet<T>::size() {
+int ArraySet<T>::size() const{
     return _current_size;
 }
 
@@ -116,7 +121,17 @@ void ArraySet<T>::insert(T element) {
 
     }
 }
+template<typename U>
+std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
+    os << "{ ";
+    for (int i = 0; i < set.size(); i++)
+    {
+        os << set._elements[i] << ", ";
+    }
+    os << "}";
 
+    return os;
+}
 
 template<typename T> 
 void ArraySet<T>::allocate_memory() {
