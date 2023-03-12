@@ -49,16 +49,17 @@ void test_InterSection() {
     for (int i = 1; i < 5; ++i) {
         set1.insert(i);
     }
-    for (int i= 2; i < 5; i+=2) {
+    for (int i= 2; i < 7; i+=2) {
         set2.insert(i);
     }
-
-    std::cout << set1.interSection(set2) << std::endl;
+    std::cout << "Set 1: " << set1 << std::endl;
+    std::cout << "Set 2: " << set2 << std::endl;
+    std::cout <<"InterSection Set1 and Set2: " << set1.interSection(set2) << std::endl;
 
     ArraySet<double> empty_set;
 
-    std::cout << set1.interSection(empty_set) << std::endl;
-    std::cout << empty_set.interSection(set2) << std::endl;
+    std::cout << "InterSection Set1 and empty set: " << set1.interSection(empty_set) << std::endl;
+    std::cout << "Intersection empty set and Set1: " << empty_set.interSection(set2) << std::endl;
 
 }
 

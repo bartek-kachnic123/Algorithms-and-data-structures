@@ -154,19 +154,16 @@ ArraySet<T> ArraySet<T>::interSection(const ArraySet &other_set) {
     
     ArraySet<T> new_set(std::min(this->_capacity, other_set._capacity));
 
-    if (this->size() < other_set.size()) {
-        for (int i = 0; i < this->size(); i++) {
-            if (other_set.isMember(this->_elements[i])) 
-                new_set.insert(this->_elements[i]);  
+    int i = 0, j = 0;
+    while(i != this->_current_size && j != other_set._current_size)
+    {
+        if (this->_elements[i] == other_set._elements[j]) {
+            new_set.insert(this->_elements[i++]);
+            j++;
         }
+        else 
+            (this->_elements[i] < other_set._elements[j]) ? i++ : j++;
     }
-    else {
-        for (int i = 0; i < other_set.size(); i++) {
-            if (this->isMember(other_set._elements[i]))
-                new_set.insert(other_set._elements[i]);
-        }
-    }
-
     return new_set;
 }
 
