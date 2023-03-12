@@ -32,7 +32,7 @@ public:
     T pop();
     ArraySet interSection(const ArraySet &other_set); 
     ArraySet unionSet(const ArraySet &other_set);
-    ArraySet difference(const ArraySet &other);
+    ArraySet difference(const ArraySet &other_set);
 
     
 private:
@@ -199,6 +199,24 @@ ArraySet<T> ArraySet<T>::unionSet(const ArraySet<T> &other_set) {
 
     return new_set;
 }
+
+template<typename T>
+ArraySet<T> ArraySet<T>::difference(const ArraySet<T> &other_set) {
+    ArraySet<T> new_set(this->_capacity);
+    int j = 0;
+    for (int i = 0; i < this->size(); i++)
+    {
+        if (this->_elements[i] != other_set._elements[j])
+            new_set.insert(this->_elements[i]);
+        else
+        {
+            j++;
+        }
+    }
+    return new_set;
+    
+}
+
 
 
 template<typename U>
