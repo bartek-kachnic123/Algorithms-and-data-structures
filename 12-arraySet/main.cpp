@@ -62,11 +62,30 @@ void test_InterSection() {
 
 }
 
+void test_unionSet() {
+    ArraySet<double> set1, set2;
+    for (int i = 1; i < 5; ++i) {
+        set1.insert(i);
+    }
+    for (int i= 2; i < 10; i+=2) {
+        set2.insert(i);
+    }
+    std::cout << "Set 1: " << set1 << std::endl;
+    std::cout << "Set 2: " << set2 << std::endl;
+
+    std::cout << "Union Set1 and Set2: " << set2.unionSet(set1) << std::endl;
+
+    ArraySet<double> empty_set;
+
+    std::cout << "Union Set1 and empty set" << set1.unionSet(empty_set) << std::endl;
+}
+
 int main() {
     test_Insert();
     test_Remove();
     test_Pop();
     test_InterSection();
+    test_unionSet();
 
     
 

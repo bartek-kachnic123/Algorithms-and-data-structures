@@ -31,7 +31,7 @@ public:
     void remove(T element);
     T pop();
     ArraySet interSection(const ArraySet &other_set); 
-    ArraySet sum(const ArraySet &other);
+    ArraySet unionSet(const ArraySet &other_set);
     ArraySet difference(const ArraySet &other);
 
     
@@ -169,6 +169,37 @@ ArraySet<T> ArraySet<T>::interSection(const ArraySet &other_set) {
 
     return new_set;
 }
+
+template<typename T>
+ArraySet<T> ArraySet<T>::unionSet(const ArraySet<T> &other_set) {
+
+    ArraySet<T> new_set(this->_capacity + other_set._capacity);
+
+    int i = 0, j = 0;
+    while (i != this->size() && j != other_set.size())
+    {
+        if (this->_elements[i] < other_set._elements[j]) {
+            new_set.insert(this->_elements[i++]);
+        }
+        else if (this->_elements[i] > other_set._elements[j]) {
+            new_set.insert(other_set._elements[j++]);
+        }
+        else // equal
+        {
+            new_set.insert(this->_elements[i++]);
+            j++;
+        }
+    }
+
+    while (i != this->size())
+        new_set.insert(this->_elements[i++]);
+
+    while(j != other_set.size()) 
+        new_set.insert(other_set._elements[j++]);
+
+    return new_set;
+}
+
 
 template<typename U>
 std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
