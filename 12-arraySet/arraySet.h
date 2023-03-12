@@ -28,7 +28,7 @@ public:
     int size() const;
     bool isMember(T &element);
     void insert(T element);
-    void remove();
+    void remove(T element);
     ArraySet& pop();
     ArraySet interSection(const ArraySet &other); 
     ArraySet sum(const ArraySet &other);
@@ -120,6 +120,21 @@ void ArraySet<T>::insert(T element) {
         _current_size++;
 
     }
+}
+template<typename T>
+void ArraySet<T>::remove(T element) {
+    if (isMember(element))
+    {
+        T *delete_position = std::lower_bound(_elements, _elements+_current_size, element);
+        std::copy(delete_position + 1, _elements+_current_size, delete_position);
+        _current_size--;
+
+        if (_current_size <= _capacity * CAPACITY_DECREASE)
+        {
+            resize(_capacity * CAPACITY_DECREASE);
+        }
+    }
+    
 }
 template<typename U>
 std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
