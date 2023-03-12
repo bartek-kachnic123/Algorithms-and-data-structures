@@ -34,11 +34,22 @@ void test_Remove() {
 }
 
 
+void test_Pop() {
+    ArraySet<int> set;
+    set.insert(3);
+    set.insert(6);
+    set.insert(2);
+
+    assert(set.pop() == 6);
+    std::cout << set << std::endl;
+}
+
 
 
 int main() {
     test_Insert();
     test_Remove();
+    test_Pop();
 
     
 

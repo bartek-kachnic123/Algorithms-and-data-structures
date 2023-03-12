@@ -29,7 +29,7 @@ public:
     bool isMember(T &element);
     void insert(T element);
     void remove(T element);
-    ArraySet& pop();
+    T pop();
     ArraySet interSection(const ArraySet &other); 
     ArraySet sum(const ArraySet &other);
     ArraySet difference(const ArraySet &other);
@@ -131,10 +131,22 @@ void ArraySet<T>::remove(T element) {
 
         if (_current_size <= _capacity * CAPACITY_DECREASE)
         {
-            resize(_capacity * CAPACITY_DECREASE);
+            resize(_capacity / CAPACITY_INCREASE);
         }
     }
     
+}
+template<typename T>
+T ArraySet<T>::pop() {
+    if (!isEmpty()) {
+        T element = _elements[--_current_size];
+
+        if (_current_size <= _capacity * CAPACITY_DECREASE)
+            resize(_capacity / CAPACITY_INCREASE);
+        
+        return element;
+    }
+    throw std::runtime_error("Set is empty!");
 }
 template<typename U>
 std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
