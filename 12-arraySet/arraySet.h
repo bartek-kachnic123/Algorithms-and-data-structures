@@ -114,9 +114,9 @@ void ArraySet<T>::insert(T element) {
             resize(_capacity * CAPACITY_DECREASE);
         }
 
-        auto pos = std::lower_bound(_elements, _elements+_current_size, element);
-        std::copy_backward(pos,  _elements+_current_size, _elements+_current_size + 1);
-        *pos = element;
+        T *insert_position = std::lower_bound(_elements, _elements+_current_size, element);
+        std::copy_backward(insert_position,  _elements+_current_size, _elements+_current_size + 1);
+        *insert_position = element;
         _current_size++;
 
     }
