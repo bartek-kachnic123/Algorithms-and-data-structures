@@ -1,4 +1,4 @@
-# Makefile
+# Makefile komenda "make"
 # Kompilator g++.
 CC = g++
 # Mozliwe dodatkowe zmienne
