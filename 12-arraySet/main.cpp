@@ -35,7 +35,13 @@ void test_Remove() {
     set.remove(5);
 
     std::cout << set << std::endl;
+    std::cout << "Removing: 2, 4, 8" << std::endl;
+    set.remove(2);
+    set.remove(4);
+    set.remove(8);
+    std::cout << set << std::endl;
     std::cout << std::endl;
+
 }
 
 

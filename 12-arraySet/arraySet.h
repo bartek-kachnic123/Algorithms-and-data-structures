@@ -1,8 +1,8 @@
 #if !defined(ARRAYSET_H)
 #define ARRAYSET_H
-#define DEFAULT_CAPACITY 16
-#define CAPACITY_INCREASE 2
-#define CAPACITY_DECREASE 0.25
+//#define DEFAULT_CAPACITY 16
+//#define CAPACITY_INCREASE 2
+//#define CAPACITY_DECREASE 0.25
 
 #include <iostream>
 #include <algorithm>
@@ -16,8 +16,13 @@ private:
     int _current_size;
     int _capacity;
 
+    static int DEFAULT_CAPACITY;
+    static int CAPACITY_INCREASE;
+    static double CAPACITY_DECREASE;
+
+
 public:
-    ArraySet(size_t capacity = DEFAULT_CAPACITY);
+    ArraySet(int capacity = DEFAULT_CAPACITY);
     ArraySet(const ArraySet &other);
     ~ArraySet();
 
@@ -43,12 +48,15 @@ private:
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set);
 
-
-
 };
 
+// static variables
+template<typename T> int ArraySet<T>::DEFAULT_CAPACITY = 8;
+template<typename T> int ArraySet<T>::CAPACITY_INCREASE = 2;
+template<typename T> double ArraySet<T>::CAPACITY_DECREASE = 0.25;
+
 template<typename T>
-ArraySet<T>::ArraySet(size_t capacity)
+ArraySet<T>::ArraySet(int capacity)
     : _current_size(0),
     _capacity(capacity)
 {
@@ -110,7 +118,7 @@ template<typename T>
 void ArraySet<T>::insert(T element) {
     
     if (isFull()) {
-        resize(_capacity * CAPACITY_DECREASE);
+        resize(_capacity * CAPACITY_INCREASE);
     }
 
     T *insert_position = std::lower_bound(_elements, _elements+_current_size, element);
@@ -228,8 +236,6 @@ ArraySet<T> ArraySet<T>::difference(const ArraySet<T> &other_set) {
     
 }
 
-
-
 template<typename U>
 std::ostream& operator<<(std::ostream& os, const ArraySet<U> &set){
     os << "{ ";
@@ -257,6 +263,10 @@ void ArraySet<T>::allocate_memory() {
 
 template<typename T>
 void ArraySet<T>::resize(int new_capacity) {
+
+    if(new_capacity < DEFAULT_CAPACITY)
+            new_capacity = DEFAULT_CAPACITY;
+
     T* tmp_elements;
     try {
         tmp_elements = new T[new_capacity];
@@ -292,6 +302,5 @@ int ArraySet<T>::binarySearch(T &element) const {
     }
     return -1;
 }
-
 
 #endif // ARRAYSET_H
