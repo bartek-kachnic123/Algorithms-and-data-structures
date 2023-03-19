@@ -7,15 +7,16 @@ void test_Insert() {
     ArraySet<double> set;
     for (int i = 1; i < 10; ++i)
         set.insert(i);
+    std::cout << "Insert Test: " << std::endl;
     std::cout << set << std::endl;
     assert(set.size() == 9);
-
+    std::cout << "Inserting: 5 2.2 0.5 11" << std::endl;
     set.insert(5);
     set.insert(2.2);
     set.insert(0.5);
     set.insert(11);
     std::cout << set << std::endl;
-    
+    std::cout << std::endl;
 }
 
 void test_Remove() {

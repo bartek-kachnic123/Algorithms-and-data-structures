@@ -108,19 +108,22 @@ bool ArraySet<T>::isMember(T &element) const {
 
 template<typename T>
 void ArraySet<T>::insert(T element) {
-    if (!isMember(element)) {
+    
+    if (isFull()) {
+        resize(_capacity * CAPACITY_DECREASE);
+    }
 
-        if (isFull()) {
-            resize(_capacity * CAPACITY_DECREASE);
-        }
+    T *insert_position = std::lower_bound(_elements, _elements+_current_size, element);
+    T *end_position = _elements + _current_size;
 
-        T *insert_position = std::lower_bound(_elements, _elements+_current_size, element);
-        std::copy_backward(insert_position,  _elements+_current_size, _elements+_current_size + 1);
+    if ((insert_position != end_position && *insert_position != element) || insert_position == end_position)
+    {
+        std::copy_backward(insert_position,  end_position, end_position + 1);
         *insert_position = element;
         _current_size++;
-
     }
 }
+
 template<typename T>
 void ArraySet<T>::remove(T element) {
     
