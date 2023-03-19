@@ -50,6 +50,7 @@ void test_Pop() {
     assert(set.pop() == 6);
     std::cout << "Pop test passed! " << std::endl;
     std::cout << set << std::endl;
+    std::cout << std::endl;
 }
 
 void test_InterSection() {
@@ -60,6 +61,7 @@ void test_InterSection() {
     for (int i= 2; i < 7; i+=2) {
         set2.insert(i);
     }
+    std::cout << "Intersection Test : " << std::endl;
     std::cout << "Set 1: " << set1 << std::endl;
     std::cout << "Set 2: " << set2 << std::endl;
     std::cout <<"InterSection Set1 and Set2: " << set1.interSection(set2) << std::endl;
@@ -68,7 +70,7 @@ void test_InterSection() {
 
     std::cout << "InterSection Set1 and empty set: " << set1.interSection(empty_set) << std::endl;
     std::cout << "Intersection empty set and Set1: " << empty_set.interSection(set2) << std::endl;
-
+    std::cout << std::endl;
 }
 
 void test_unionSet() {
@@ -79,6 +81,7 @@ void test_unionSet() {
     for (int i= 2; i < 10; i+=2) {
         set2.insert(i);
     }
+    std::cout << "Union Test: " << std::endl;
     std::cout << "Set 1: " << set1 << std::endl;
     std::cout << "Set 2: " << set2 << std::endl;
 
@@ -92,12 +95,13 @@ void test_unionSet() {
 
 void test_Difference() {
     ArraySet<double> set1, set2;
-    for (int i = 1; i < 6; ++i) {
+    for (int i = 5; i < 10; ++i) {
         set1.insert(i);
     }
-    for (int i= 2; i < 10; i+=2) {
+    for (int i= 2; i < 17; i+=2) {
         set2.insert(i);
     }
+    std::cout << "Difference Test : " << std::endl;
     std::cout << "Set 1: " << set1 << std::endl;
     std::cout << "Set 2: " << set2 << std::endl;
 

@@ -163,7 +163,7 @@ ArraySet<T> ArraySet<T>::interSection(const ArraySet &other_set) {
     while(i != this->_current_size && j != other_set._current_size)
     {
         if (this->_elements[i] == other_set._elements[j]) {
-            new_set.insert(this->_elements[i++]);
+            new_set._elements[new_set._current_size++] = this->_elements[i++];
             j++;
         }
         else 
@@ -178,26 +178,28 @@ ArraySet<T> ArraySet<T>::unionSet(const ArraySet<T> &other_set) {
     ArraySet<T> new_set(this->_capacity + other_set._capacity);
 
     int i = 0, j = 0;
-    while (i != this->size() && j != other_set.size())
+    while (i != this->_current_size && j != other_set._current_size)
     {
         if (this->_elements[i] < other_set._elements[j]) {
-            new_set.insert(this->_elements[i++]);
+            new_set._elements[new_set._current_size++] = this->_elements[i++];
         }
         else if (this->_elements[i] > other_set._elements[j]) {
-            new_set.insert(other_set._elements[j++]);
+            new_set._elements[new_set._current_size++] = other_set._elements[j++];
         }
         else // equal
         {
-            new_set.insert(this->_elements[i++]);
+            new_set._elements[new_set._current_size++] = this->_elements[i++];
             j++;
         }
     }
 
-    while (i != this->size())
-        new_set.insert(this->_elements[i++]);
+    while (i != this->_current_size)
+        new_set._elements[new_set._current_size++] = this->_elements[i++];
 
-    while(j != other_set.size()) 
-        new_set.insert(other_set._elements[j++]);
+
+    while(j != other_set._current_size) 
+        new_set._elements[new_set._current_size++] = other_set._elements[j++];
+
 
     return new_set;
 }
@@ -205,16 +207,23 @@ ArraySet<T> ArraySet<T>::unionSet(const ArraySet<T> &other_set) {
 template<typename T>
 ArraySet<T> ArraySet<T>::difference(const ArraySet<T> &other_set) {
     ArraySet<T> new_set(this->_capacity);
-    int j = 0;
-    for (int i = 0; i < this->size(); i++)
+    int i = 0, j = 0;
+    while (i < this->_current_size && j < other_set._current_size)
     {
-        if (this->_elements[i] != other_set._elements[j])
-            new_set.insert(this->_elements[i]);
-        else
-        {
+        if (this->_elements[i] < other_set._elements[j])
+            new_set._elements[new_set._current_size++] = this->_elements[i++];
+        else if (this->_elements[i] > other_set._elements[j]){
+            j++;
+        }
+        else {
+            i++;
             j++;
         }
     }
+
+    while (i < this->_current_size)
+        new_set._elements[new_set._current_size++] = this->_elements[i++];
+
     return new_set;
     
 }
