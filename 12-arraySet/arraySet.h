@@ -123,9 +123,9 @@ void ArraySet<T>::insert(T element) {
 }
 template<typename T>
 void ArraySet<T>::remove(T element) {
-    if (isMember(element))
-    {
-        T *delete_position = std::lower_bound(_elements, _elements+_current_size, element);
+    
+    T *delete_position = std::lower_bound(_elements, _elements+_current_size, element);
+    if (delete_position != _elements + _current_size) {
         std::copy(delete_position + 1, _elements+_current_size, delete_position);
         _current_size--;
 

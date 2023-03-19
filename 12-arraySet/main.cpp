@@ -25,12 +25,16 @@ void test_Remove() {
     set.insert(5);
     set.insert(2.2);
     
+    std::cout << "Remove test: " << std::endl;
+    std::cout << "Set : " << set << std::endl;
+    std::cout << "Removing 1, 9, 5, 5 : " << std::endl;
     set.remove(1);
     set.remove(9);
     set.remove(5);
     set.remove(5);
 
     std::cout << set << std::endl;
+    std::cout << std::endl;
 }
 
 
@@ -39,8 +43,11 @@ void test_Pop() {
     set.insert(3);
     set.insert(6);
     set.insert(2);
-
+    for (int i = 1; i < 5; ++i) {
+        set.insert(i);
+    }
     assert(set.pop() == 6);
+    std::cout << "Pop test passed! " << std::endl;
     std::cout << set << std::endl;
 }
 
