@@ -134,8 +134,10 @@ QueueElem<T> PriorityQueue<T>::extractMax() {
     _queue_elements[i] = lastElem;
 
     
+    if (_current_size < _capacity * CAPACITY_DECREASE)
+        resize(_capacity / CAPACITY_INCREASE);
+
     return maxQueueElem;
-    
 }
 template<typename T>
 bool PriorityQueue<T>::isEmpty() {

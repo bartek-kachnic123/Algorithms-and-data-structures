@@ -38,15 +38,23 @@ void test_ExtractMax() {
     std::cout << std::endl;
 
 
+    
+}
+void test_Resize() {
+    PriorityQueue<double> priority_queue;
     srand(time(0));
-    for (int i = 1; i < 12; i++) {
+    for (int i = 1; i < 200; i++) {
         priority_queue.insert(i, rand() % 9 + 1);
     }
-    std::cout << "Insert test 2: " << std::endl;
-    std::cout << priority_queue << std::endl;
+    
+    int size = priority_queue.size();
+    for (int i = 50; i < size; i++) {
+        priority_queue.extractMax();
+    }
 }
 int main() {
     test_Insert();
     test_Max();
     test_ExtractMax();
+    test_Resize();
 }
