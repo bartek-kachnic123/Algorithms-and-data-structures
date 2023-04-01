@@ -1,6 +1,7 @@
 #if !defined(PRIORITY_QUEUE_HPP)
 #define PRIORITY_QUEUE_HPP
 #include <iostream>
+#include <stdexcept>
 
 template<typename T>
 class QueueElem {
@@ -95,6 +96,12 @@ void PriorityQueue<T>::insert(T element, int key) {
     }
 }
 
+template<typename T>
+QueueElem<T> PriorityQueue<T>::max() {
+    if (isEmpty())
+        throw std::runtime_error("Priority queue is empty");
+    return _queue_elements[0];
+}
 template<typename T>
 bool PriorityQueue<T>::isEmpty() {
     return (_current_size == 0);
