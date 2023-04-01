@@ -56,6 +56,8 @@ private:
     void resize(int new_capacity);
 
     inline int parent(int i);
+    inline int leftChild(int i);
+    inline int rightChild(int i);
 
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const PriorityQueue<U>& pq);
@@ -101,6 +103,27 @@ QueueElem<T> PriorityQueue<T>::max() {
     if (isEmpty())
         throw std::runtime_error("Priority queue is empty");
     return _queue_elements[0];
+}
+
+template<typename T>
+QueueElem<T> PriorityQueue<T>::extractMax() {
+    if (isEmpty())
+        throw std::runtime_error("Priority queue is empty");
+
+    QueueElem<T> maxQueueElem = max();
+    int i = 0;
+    while(i < _current_size) {
+        if (_queue_elements[leftChild(i)] < _queue_elements[i]) {
+            std::swap(_queue_elements[leftChild[i]], _queue_elements[i]);
+            i = leftChild(i);
+        }
+        else {
+            std::swap(_queue_elements[rightChild[i]], _queue_elements[i]);
+            i = rightChild();
+        }
+    }
+    
+    
 }
 template<typename T>
 bool PriorityQueue<T>::isEmpty() {
@@ -156,6 +179,16 @@ void PriorityQueue<T>::resize(int new_capacity) {
 template<typename T>
 int PriorityQueue<T>::parent(int i) {
     return (i / 2);
+}
+
+template<typename T>
+int PriorityQueue<T>::leftChild(int i) {
+    return (i * 2) + 1;
+}
+
+template<typename T>
+int PriorityQueue<T>::rightChild(int i) {
+    return (i * 2) + 2;
 }
 
 template<typename U>
