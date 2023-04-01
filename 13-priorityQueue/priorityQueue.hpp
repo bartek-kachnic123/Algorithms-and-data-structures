@@ -17,9 +17,14 @@ class QueueElem {
         _obj = obj;
     };
     ~QueueElem(){};
-    
+    void setPriority(int priority) {
+        _priority = priority;
+    }
     bool operator<(const QueueElem& qe) {
         return (this->_priority < qe._priority);
+    }
+    bool operator>(const QueueElem& qe) {
+        return (this->_priority > qe._priority);
     }
     friend std::ostream& operator<<(std::ostream& os, const QueueElem& qe) {
         os << qe._obj << "[K:" << qe._priority << "]";
@@ -111,18 +116,25 @@ QueueElem<T> PriorityQueue<T>::extractMax() {
         throw std::runtime_error("Priority queue is empty");
 
     QueueElem<T> maxQueueElem = max();
+    QueueElem<T> lastElem = _queue_elements[size() - 1];
+    _current_size--;
+
     int i = 0;
-    while(i < _current_size) {
-        if (_queue_elements[leftChild(i)] < _queue_elements[i]) {
-            std::swap(_queue_elements[leftChild[i]], _queue_elements[i]);
+    while(leftChild(i) < _current_size) {
+        if (_queue_elements[leftChild(i)] < _queue_elements[rightChild(i)]) {
+            _queue_elements[i] = _queue_elements[leftChild(i)];
             i = leftChild(i);
         }
         else {
-            std::swap(_queue_elements[rightChild[i]], _queue_elements[i]);
-            i = rightChild();
+            _queue_elements[i] = _queue_elements[rightChild(i)];
+            i = rightChild(i);
         }
+       
     }
+    _queue_elements[i] = lastElem;
+
     
+    return maxQueueElem;
     
 }
 template<typename T>
