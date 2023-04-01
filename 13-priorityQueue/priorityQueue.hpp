@@ -8,17 +8,20 @@ class QueueElem {
     int _priority;
     T _obj;
     
-    QueueElem(int &priority, T &obj) {
-        _priority = priority;
-        _obj = obj;
-    };
 
     public:
     QueueElem(){};
+    QueueElem(T &obj, int &priority) {
+        _priority = priority;
+        _obj = obj;
+    };
     ~QueueElem(){};
-
+    
+    bool operator<(const QueueElem& qe) {
+        return (this->_priority < qe._priority);
+    }
     friend std::ostream& operator<<(std::ostream& os, const QueueElem& qe) {
-        os << qe._obj;
+        os << qe._obj << "[K:" << qe._priority << "]";
         return os;
     }
 };
@@ -42,11 +45,19 @@ public:
     void insert(T element, int key);
     QueueElem<T> max();
     QueueElem<T> extractMax();
+    inline bool isEmpty();
+    inline bool isFull();
+    inline int size() const;
 
 private:
     
     void allocate_memory();
     void resize(int new_capacity);
+
+    inline int parent(int i);
+
+    template<typename U>
+    friend std::ostream& operator<<(std::ostream& os, const PriorityQueue<U>& pq);
 };
 
 // static variables
@@ -69,7 +80,34 @@ PriorityQueue<T>::~PriorityQueue()
         delete []_queue_elements;
 }
 
+template<typename T>
+void PriorityQueue<T>::insert(T element, int key) {
+    if (isFull()) {
+        resize(_capacity * CAPACITY_INCREASE);
+    }
 
+    _queue_elements[_current_size++] = QueueElem<T>(element, key);
+    int i = _current_size - 1;
+    while(_queue_elements[i] < _queue_elements[parent(i)]) {
+        std::swap(_queue_elements[i], _queue_elements[parent(i)]);
+
+        i = parent(i);
+    }
+}
+
+template<typename T>
+bool PriorityQueue<T>::isEmpty() {
+    return (_current_size == 0);
+}
+
+template<typename T>
+bool PriorityQueue<T>::isFull() {
+    return (_current_size == _capacity);
+}
+template<typename T>
+int PriorityQueue<T>::size() const {
+    return _current_size;
+}
 template<typename T> 
 void PriorityQueue<T>::allocate_memory() {
     try
@@ -107,5 +145,22 @@ void PriorityQueue<T>::resize(int new_capacity) {
     _queue_elements = tmp_queue_elements;
 }
 
+
+template<typename T>
+int PriorityQueue<T>::parent(int i) {
+    return (i / 2);
+}
+
+template<typename U>
+std::ostream& operator<<(std::ostream& os, const PriorityQueue<U> &pq){
+    os << "{ ";
+    for (int i = 0; i < pq._current_size; i++)
+    {
+        os << pq._queue_elements[i] << ", ";
+    }
+    os << "}";
+
+    return os;
+}
 
 #endif // PRIORITY_QUEUE_HPP
