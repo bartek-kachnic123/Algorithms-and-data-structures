@@ -178,7 +178,7 @@ void PriorityQueue<T>::resize(int new_capacity) {
 
 template<typename T>
 int PriorityQueue<T>::parent(int i) {
-    return (i / 2);
+    return (i != 0) ? (i - 1) / 2 : 0;
 }
 
 template<typename T>
