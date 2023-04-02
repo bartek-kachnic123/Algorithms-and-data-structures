@@ -34,7 +34,7 @@ class PriorityQueue
 {
 private:
     /* data */
-    QueueElem<T>* _queue_elements;
+    QueueElem<T>* _queue_elements; // priority from 0 to max_int, 0 - highest priotity, max_int - lowest.
     int _current_size;
     int _capacity;
 
@@ -65,7 +65,7 @@ private:
     inline int rightChild(int i);
 
     template<typename U>
-    friend std::ostream& operator<<(std::ostream& os, const PriorityQueue<U>& pq);
+    friend std::ostream& operator<<(std::ostream& os, PriorityQueue<U> pq);
 };
 
 // static variables
@@ -179,6 +179,7 @@ template<typename T>
 int PriorityQueue<T>::size() const {
     return _current_size;
 }
+
 template<typename T> 
 void PriorityQueue<T>::allocate_memory() {
     try
@@ -233,14 +234,11 @@ int PriorityQueue<T>::rightChild(int i) {
 }
 
 template<typename U>
-std::ostream& operator<<(std::ostream& os, const PriorityQueue<U> &pq){
+std::ostream& operator<<(std::ostream& os,  PriorityQueue<U> pq){
     os << "{ ";
-    for (int i = 0; i < pq._current_size; i++)
-    {
-        os << pq._queue_elements[i] << ", ";
+    while(!pq.isEmpty()) {
+        os << pq.extractMax() << ", ";
     }
-    os << "}";
-
     return os;
 }
 

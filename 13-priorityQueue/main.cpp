@@ -5,7 +5,7 @@ void test_Insert() {
     PriorityQueue<int> priority_queue;
     srand(time(0));
     for (int i = 1; i < 12; i++) {
-        priority_queue.insert(i, rand() % 9 + 1);
+        priority_queue.insert(i, rand() % 10);
     }
     std::cout << "Insert test: " << std::endl;
     std::cout << priority_queue << std::endl;
@@ -16,7 +16,7 @@ void test_Max() {
     PriorityQueue<int> priority_queue;
     srand(time(0));
     for (int i = 1; i < 12; i++) {
-        priority_queue.insert(i, rand() % 9 + 1);
+        priority_queue.insert(i, rand() % 10);
     }
     std::cout << "Max test: " << std::endl;
     std::cout << "Q: " << priority_queue << std::endl;
@@ -45,7 +45,7 @@ void test_Resize() {
     srand(time(0));
     for (int x = 1; x < 3; x++) {
     for (int i = 1; i < 200; i++) {
-        priority_queue.insert(i, rand() % 9 + 1);
+        priority_queue.insert(i, rand() % 10);
     }
     
     int size = priority_queue.size();
@@ -58,7 +58,7 @@ void test_CopyConstructor_and_CopyAssigment() {
     PriorityQueue<int> pq1,pq2;
     
     for (int i = 1; i < 10; i++) {
-        pq1.insert(i, rand() % 9 + 1);
+        pq1.insert(i, rand() % 10);
     }
     std::cout << "Q: " << pq1 << std::endl;
     pq2 = pq1;
