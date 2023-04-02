@@ -92,6 +92,7 @@ ArraySet<T>& ArraySet<T>::operator=(const ArraySet &other) {
     allocate_memory();
 
     std::copy(other._elements, other._elements+_current_size, _elements);
+    return *this;
 }
 
 template<typename T>
