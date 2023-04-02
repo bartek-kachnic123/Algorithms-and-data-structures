@@ -43,6 +43,7 @@ void test_ExtractMax() {
 void test_Resize() {
     PriorityQueue<double> priority_queue;
     srand(time(0));
+    for (int x = 1; x < 3; x++) {
     for (int i = 1; i < 200; i++) {
         priority_queue.insert(i, rand() % 9 + 1);
     }
@@ -51,10 +52,25 @@ void test_Resize() {
     for (int i = 50; i < size; i++) {
         priority_queue.extractMax();
     }
+    }
 }
+void test_CopyConstructor_and_CopyAssigment() {
+    PriorityQueue<int> pq1,pq2;
+    
+    for (int i = 1; i < 10; i++) {
+        pq1.insert(i, rand() % 9 + 1);
+    }
+    std::cout << "Q: " << pq1 << std::endl;
+    pq2 = pq1;
+    std::cout << "Q copy assigment: " << pq2 << std::endl;
+    PriorityQueue<int> pq3(pq2);
+    std::cout << "Q copy constructor: " << pq3 << std::endl;
+}
+
 int main() {
     test_Insert();
     test_Max();
     test_ExtractMax();
     test_Resize();
+    test_CopyConstructor_and_CopyAssigment();
 }

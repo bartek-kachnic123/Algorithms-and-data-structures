@@ -9,7 +9,6 @@ class QueueElem {
     int _priority;
     T _obj;
     
-
     public:
     QueueElem(){};
     QueueElem(T &obj, int &priority) {
@@ -17,9 +16,7 @@ class QueueElem {
         _obj = obj;
     };
     ~QueueElem(){};
-    void setPriority(int priority) {
-        _priority = priority;
-    }
+    
     bool operator<(const QueueElem& qe) {
         return (this->_priority < qe._priority);
     }
@@ -46,6 +43,7 @@ private:
     static double CAPACITY_DECREASE;
 public:
     PriorityQueue(int capacity = DEFAULT_CAPACITY);
+    PriorityQueue(const PriorityQueue<T> &other);
     ~PriorityQueue();
 
     void insert(T element, int key);
@@ -54,6 +52,8 @@ public:
     inline bool isEmpty();
     inline bool isFull();
     inline int size() const;
+
+    PriorityQueue<T>& operator=(const PriorityQueue<T> &other);
 
 private:
     
@@ -89,10 +89,37 @@ PriorityQueue<T>::~PriorityQueue()
 }
 
 template<typename T>
+PriorityQueue<T>::PriorityQueue(const PriorityQueue<T> &other) 
+    : _current_size(other._current_size),
+    _capacity(other._capacity)
+{
+    allocate_memory();
+    std::copy(other._queue_elements, other._queue_elements+_current_size, _queue_elements);
+}
+
+template<typename T>
+PriorityQueue<T>& PriorityQueue<T>::operator=(const PriorityQueue<T> &other) {
+    if (this == &other)
+        return *this;
+    
+    delete []_queue_elements;
+
+    _current_size = other._current_size;
+    _capacity = other._capacity;
+
+    allocate_memory();
+
+    std::copy(other._queue_elements, other._queue_elements+_current_size, _queue_elements);
+    return *this;
+}
+template<typename T>
 void PriorityQueue<T>::insert(T element, int key) {
     if (isFull()) {
         resize(_capacity * CAPACITY_INCREASE);
     }
+
+    if (key < 0)
+        key = 0;
 
     _queue_elements[_current_size++] = QueueElem<T>(element, key);
     int i = _current_size - 1;
