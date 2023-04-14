@@ -1,12 +1,12 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 #include <iostream>
-#include <forward_list>
 #include <stdexcept>
+#include <set>
 
 template<typename T>
 class GraphVertex {
-    std::forward_list<GraphVertex<T>> list_neigbours;
+    std::set<int> adjancency_list;
     T value;
 };
 
@@ -16,27 +16,37 @@ class Graph
 {
 private:
     /* data */
-    GraphVertex<T> **vertexTab;
+    GraphVertex<T> *vertexTab;
 public:
     Graph(int numVert);
     ~Graph();
+
+    void addEdge(int i, int j);
+    void removeEdge(int i, int j);
+    bool hasEdge(int i, int j);
+
+    std::set<int> inConnection(int i);
+    std::set<int> outConnection(int i);
+    std::set<int> allConnections(int i);
+
 };
 
 template<typename T>
 Graph<T>::Graph(int numVert)
 {
     try {
-        vertexTab = new GraphVertex<T>*[numVert];
+        vertexTab = new GraphVertex<T>[numVert];
     }
     catch (std::bad_alloc &e) {
         std::cerr << e.what() << std::endl;
-        std::abort(1);
+        std::abort();
     }
 }
 
 template<typename T>
 Graph<T>::~Graph()
 {
+    delete [] vertexTab;
 }
 
 
