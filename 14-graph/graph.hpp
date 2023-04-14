@@ -22,13 +22,16 @@ public:
     Graph(int numVert);
     ~Graph();
 
-    void addEdge(int i, int j);
+    void addEdge(int v1, int v2);
     void removeEdge(int i, int j);
     bool hasEdge(int v1, int v2);
 
     std::set<int> inConnection(int i);
     std::set<int> outConnection(int i);
     std::set<int> allConnections(int i);
+
+private:
+    inline bool hasVertex(int v);
 
 };
 
@@ -51,11 +54,16 @@ Graph<T>::~Graph()
     delete [] vertexTab;
 }
 
+template<typename T>
+void Graph<T>::addEdge(int v1, int v2) {
+    if (v1 != v2 && hasVertex(v1) && hasVertex(v2)) 
+        vertexTab[v1].adjancency_list.insert(v2);
+}
 
 
 template<typename T>
 bool Graph<T>::hasEdge(int v1, int v2) {
-    if (v1 != v2 && (-1 < v1) < _numVert && (-1  < v2 )< _numVert) {
+    if (v1 != v2 && hasVertex(v1) && hasVertex(v2)) {
         try
         {
             if (vertexTab[v1].adjancency_list.contains(v2))
@@ -70,6 +78,8 @@ bool Graph<T>::hasEdge(int v1, int v2) {
     return false;
 }
 
-
-
+template<typename T>
+inline bool Graph<T>::hasVertex(int v) {
+    return  ((-1 < v) < _numVert) ? true : false;
+}
 #endif // GRAPH_H
