@@ -1,5 +1,6 @@
 #include "graph.hpp"
 #include <cassert>
+#include <iomanip>
 
 void test_hasEdge() {
     Graph<int> graph_1(10);
@@ -108,6 +109,38 @@ void test_Constructors() {
     std::cout << "Test constructors passed! " << std::endl;
     
 }
+void test_bfs() {
+    Graph<int> graph_1(10);
+    graph_1.addEdge(1, 3);
+    graph_1.addEdge(1, 5);
+
+    graph_1.addEdge(3, 2);
+    graph_1.addEdge(5, 6);
+
+    graph_1.addEdge(6, 9);
+
+    std::vector<int> distance_array = graph_1.bfs(1);
+    for (long unsigned int i = 0; i < distance_array.size() ; ++i) {
+        std::cout << std::setw(2) << i << "| ";
+    }
+    std::cout << std::endl;
+    for (auto &d : distance_array) {
+        std::cout << std::setw(2) <<  d << "| ";
+    }
+    std::cout << std::endl;
+    std::cout << "Test bfs passed!" << std::endl;
+
+    distance_array = graph_1.bfs(5);
+    for (long unsigned int i = 0; i < distance_array.size() ; ++i) {
+        std::cout << std::setw(2) << i << "| ";
+    }
+    std::cout << std::endl;
+    for (auto &d : distance_array) {
+        std::cout << std::setw(2) <<  d << "| ";
+    }
+    std::cout << std::endl;
+    std::cout << "Test bfs passed!" << std::endl;
+}
 int main() {
     test_hasEdge();
     test_addEdge();
@@ -118,5 +151,8 @@ int main() {
     test_allConnections();
 
     test_Constructors();
+
+    test_bfs();
+
     return 0;
 }

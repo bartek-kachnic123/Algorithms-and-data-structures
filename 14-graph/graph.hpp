@@ -4,6 +4,8 @@
 #include <stdexcept>
 #include <set>
 #include <algorithm>
+#include <queue>
+#include <vector>
 
 template<typename T>
 struct GraphVertex {
@@ -33,6 +35,8 @@ public:
     std::set<int> inConnections(int v);
     std::set<int> outConnections(int v);
     std::set<int> allConnections(int v);
+
+    std::vector<int> bfs(int v);
 
 private:
     inline bool hasVertex(int v);
@@ -127,6 +131,37 @@ std::set<int> Graph<T>::allConnections(int v) {
     in.insert(out.begin(), out.end());
     return in;
 }
+
+template<typename T>
+std::vector<int> Graph<T>::bfs(int v)
+{
+    if (hasVertex(v)) {
+        std::queue<int> qu;  
+        std::vector<int> distance_array(_numVert, -1); //_numVert elements with value -1
+
+        distance_array[v] = 0; // start 
+        qu.push(v); 
+
+        while (!qu.empty())
+        {
+            v = qu.front();      
+            qu.pop();
+
+            for (const int &x : vertexTab[v].adjancency_list) {
+                if (distance_array[x] == -1)
+                {
+                    qu.push(x);
+                    distance_array[x] = distance_array[v] + 1;
+                }
+            }
+            
+        }
+        return distance_array;
+    } 
+    
+    throw std::invalid_argument("vertex doesnt exist in graph");
+}
+
 template<typename T>
 inline bool Graph<T>::hasVertex(int v) {
     return  ((-1 < v) < _numVert) ? true : false;
