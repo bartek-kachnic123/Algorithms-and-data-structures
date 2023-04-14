@@ -27,12 +27,12 @@ public:
     Graph& operator=(const Graph& other);
 
     void addEdge(int v1, int v2);
-    void removeEdge(int i, int j);
+    void removeEdge(int v1, int v2);
     bool hasEdge(int v1, int v2);
 
-    std::set<int> inConnections(int i);
-    std::set<int> outConnections(int i);
-    std::set<int> allConnections(int i);
+    std::set<int> inConnections(int v);
+    std::set<int> outConnections(int v);
+    std::set<int> allConnections(int v);
 
 private:
     inline bool hasVertex(int v);
