@@ -84,6 +84,18 @@ bool Graph<T>::hasEdge(int v1, int v2) {
 }
 template<typename T>
 std::set<int> Graph<T>::inConnections(int v) {
+    if (hasVertex(v)) {
+        std::set<int> in_connections;
+        for (int i = 0; i < _numVert; i++) {
+            if (v == i)
+                continue;
+            
+            if (vertexTab[i].adjancency_list.contains(v))
+                in_connections.insert(i);
+        }
+        return in_connections;
+    }
+    throw std::invalid_argument("vertex doesnt exist in graph");
 
 }
 

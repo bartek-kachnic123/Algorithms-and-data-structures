@@ -40,7 +40,7 @@ void test_outConnections() {
     Graph<int> graph_1(120);
     for (int i = 2; i < 120; i+= 5) 
         graph_1.addEdge(1, i);
-    std::set<int> outConn = graph_1.outConnection(1);
+    std::set<int> outConn = graph_1.outConnections(1);
     for (int v : outConn) {
         std::cout << v << ", ";
     }
@@ -48,11 +48,26 @@ void test_outConnections() {
     std::cout << "test outConnections passed! " << std::endl;
     
 }
+
+void test_inConnections() {
+    Graph<int> graph_1(100);
+    for (int i = 1; i < 100; i+=6)
+    {
+        graph_1.addEdge(i, 0);
+    }
+    std::set<int> inConn = graph_1.inConnections(0);
+    for (int v : inConn) {
+        std::cout << v << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "test inConnections passed! " << std::endl;
+}
 int main() {
     test_hasEdge();
     test_addEdge();
     test_removeEdge();
-   
+    
+    test_inConnections();
     test_outConnections();
     return 0;
 }
