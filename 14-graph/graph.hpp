@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <set>
+#include <algorithm>
 
 template<typename T>
 struct GraphVertex {
@@ -104,6 +105,14 @@ std::set<int> Graph<T>::outConnections(int v) {
     if (hasVertex(v))
         return vertexTab[v].adjancency_list;
     throw std::invalid_argument("vertex doesnt exist in graph");
+}
+
+template<typename T>
+std::set<int> Graph<T>::allConnections(int v) {
+    std::set<int> in = inConnections(v);
+    std::set<int> out = outConnections(v);
+    in.insert(out.begin(), out.end());
+    return in;
 }
 template<typename T>
 inline bool Graph<T>::hasVertex(int v) {
