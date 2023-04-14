@@ -21,7 +21,10 @@ private:
     GraphVertex<T> *vertexTab;
 public:
     Graph(int numVert);
+    Graph(const Graph& other);
     ~Graph();
+
+    Graph& operator=(const Graph& other);
 
     void addEdge(int v1, int v2);
     void removeEdge(int i, int j);
@@ -33,6 +36,7 @@ public:
 
 private:
     inline bool hasVertex(int v);
+    void allocate_memory();
 
 };
 
@@ -40,13 +44,30 @@ template<typename T>
 Graph<T>::Graph(int numVert)
     : _numVert(numVert)
 {
-    try {
-        vertexTab = new GraphVertex<T>[numVert];
-    }
-    catch (std::bad_alloc &e) {
-        std::cerr << e.what() << std::endl;
-        std::abort();
-    }
+    allocate_memory();
+}
+
+template<typename T>
+Graph<T>::Graph(const Graph& other) 
+    : _numVert(other._numVert)
+{
+    allocate_memory();
+    std::copy(other.vertexTab, other.vertexTab+_numVert, vertexTab);
+}
+
+template<typename T>
+Graph<T>& Graph<T>::operator=(const Graph<T> &other) {
+    if (this == &other)
+        return *this;
+    
+    delete []vertexTab;
+
+    _numVert = other._numVert;
+
+    allocate_memory();
+
+    std::copy(other.vertexTab, other.vertexTab+_numVert, vertexTab);
+    return *this;
 }
 
 template<typename T>
@@ -109,5 +130,18 @@ std::set<int> Graph<T>::allConnections(int v) {
 template<typename T>
 inline bool Graph<T>::hasVertex(int v) {
     return  ((-1 < v) < _numVert) ? true : false;
+}
+
+template<typename T> 
+void Graph<T>::allocate_memory() {
+    try
+    {
+        vertexTab = new GraphVertex<T>[_numVert];
+    }
+    catch(const std::bad_alloc& e)
+    {
+        std::cerr << e.what() << '\n';
+        std::abort();
+    }
 }
 #endif // GRAPH_H
