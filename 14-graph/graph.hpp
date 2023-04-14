@@ -70,16 +70,8 @@ void Graph<T>::removeEdge(int v1, int v2) {
 template<typename T>
 bool Graph<T>::hasEdge(int v1, int v2) {
     if (v1 != v2 && hasVertex(v1) && hasVertex(v2)) {
-        try
-        {
-            if (vertexTab[v1].adjancency_list.contains(v2))
-                return true;
-        }
-        catch(const std::exception& e)
-        {
-            std::cerr << e.what() << '\n';
-        }
-        
+        if (vertexTab[v1].adjancency_list.contains(v2))
+            return true;
     }
     return false;
 }
