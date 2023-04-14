@@ -4,7 +4,7 @@ CC = g++
 # Mozliwe dodatkowe zmienne
 # LIBS = -ll -lm
 LIBS =
-CFLAGS = -Wall -std=c++11
+CFLAGS = -Wall -std=c++20
 # Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
