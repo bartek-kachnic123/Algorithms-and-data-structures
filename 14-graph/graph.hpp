@@ -60,6 +60,11 @@ void Graph<T>::addEdge(int v1, int v2) {
         vertexTab[v1].adjancency_list.insert(v2);
 }
 
+template<typename T>
+void Graph<T>::removeEdge(int v1, int v2) {
+    if (v1 != v2 && hasVertex(v1) && hasVertex(v2)) 
+        vertexTab[v1].adjancency_list.erase(v2);
+}
 
 template<typename T>
 bool Graph<T>::hasEdge(int v1, int v2) {
@@ -78,6 +83,12 @@ bool Graph<T>::hasEdge(int v1, int v2) {
     return false;
 }
 
+template<typename T>
+std::set<int> Graph<T>::outConnection(int v) {
+    if (hasVertex(v))
+        return vertexTab[v].adjancency_list;
+    throw std::invalid_argument("vertex doesnt exist in graph");
+}
 template<typename T>
 inline bool Graph<T>::hasVertex(int v) {
     return  ((-1 < v) < _numVert) ? true : false;

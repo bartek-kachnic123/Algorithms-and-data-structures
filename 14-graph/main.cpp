@@ -25,9 +25,34 @@ void test_addEdge() {
     std::cout << "Test addEdge passed!" << std::endl;
 
 }
+void test_removeEdge() {
+    Graph<double> graph_1(100);
+    graph_1.addEdge(1, 99);
+    assert(graph_1.hasEdge(1, 99) == true);
+
+    graph_1.removeEdge(1, 99);
+    assert(graph_1.hasEdge(1, 99) == false);
+
+    std::cout << "Test removeEdge passed!" << std::endl;
+
+}
+void test_outConnections() {
+    Graph<int> graph_1(120);
+    for (int i = 2; i < 120; i+= 5) 
+        graph_1.addEdge(1, i);
+    std::set<int> outConn = graph_1.outConnection(1);
+    for (int v : outConn) {
+        std::cout << v << ", ";
+    }
+    std::cout << std::endl;
+    std::cout << "test outConnections passed! " << std::endl;
+    
+}
 int main() {
     test_hasEdge();
     test_addEdge();
+    test_removeEdge();
    
+    test_outConnections();
     return 0;
 }
