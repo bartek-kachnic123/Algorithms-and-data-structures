@@ -26,8 +26,8 @@ public:
     void removeEdge(int i, int j);
     bool hasEdge(int v1, int v2);
 
-    std::set<int> inConnection(int i);
-    std::set<int> outConnection(int i);
+    std::set<int> inConnections(int i);
+    std::set<int> outConnections(int i);
     std::set<int> allConnections(int i);
 
 private:
@@ -82,9 +82,13 @@ bool Graph<T>::hasEdge(int v1, int v2) {
     }
     return false;
 }
+template<typename T>
+std::set<int> Graph<T>::inConnections(int v) {
+
+}
 
 template<typename T>
-std::set<int> Graph<T>::outConnection(int v) {
+std::set<int> Graph<T>::outConnections(int v) {
     if (hasVertex(v))
         return vertexTab[v].adjancency_list;
     throw std::invalid_argument("vertex doesnt exist in graph");
