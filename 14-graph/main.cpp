@@ -141,6 +141,19 @@ void test_bfs() {
     std::cout << std::endl;
     std::cout << "Test bfs passed!" << std::endl;
 }
+
+void test_dfs() {
+    Graph<int> graph_1(10);
+    graph_1.addEdge(1, 3);
+    graph_1.addEdge(1, 5);
+
+    graph_1.addEdge(3, 2);
+    graph_1.addEdge(5, 6);
+
+    graph_1.addEdge(6, 9);
+
+    graph_1.dfs();
+}
 int main() {
     test_hasEdge();
     test_addEdge();
@@ -153,6 +166,8 @@ int main() {
     test_Constructors();
 
     test_bfs();
+
+    test_dfs();
 
     return 0;
 }

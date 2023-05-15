@@ -7,6 +7,9 @@
 #include <queue>
 #include <vector>
 
+
+
+
 template<typename T>
 struct GraphVertex {
     std::set<int> adjancency_list;
@@ -38,9 +41,15 @@ public:
 
     std::vector<int> bfs(int v);
 
+    void dfs();
+
+    
+
 private:
     inline bool hasVertex(int v);
     void allocate_memory();
+
+    void dfs_visit(const int &v, std::vector<int> &start_processing, std::vector<int> &end_processing, int &time);
 
 };
 
@@ -162,6 +171,34 @@ std::vector<int> Graph<T>::bfs(int v)
     throw std::invalid_argument("vertex doesnt exist in graph");
 }
 
+template <typename T>
+void Graph<T>::dfs()
+{
+    std::vector<int> start_processing(_numVert, -1);
+    std::vector<int> end_processing(_numVert);
+
+    int time_counter = 0;
+
+    for (int v = 0; v < _numVert; v++)
+    {
+        if (start_processing[v] == -1)
+        {
+            dfs_visit(v, start_processing, end_processing, time_counter);
+        }
+        
+    }
+    
+    for (int &i: start_processing)
+        std::cout << i << ", ";
+    std::cout << std::endl;
+
+    for (int &i: end_processing)
+        std::cout << i << ", ";
+    std::cout << std::endl;
+    
+    
+}
+
 template<typename T>
 inline bool Graph<T>::hasVertex(int v) {
     return  ((-1 < v) < _numVert) ? true : false;
@@ -178,5 +215,19 @@ void Graph<T>::allocate_memory() {
         std::cerr << e.what() << '\n';
         std::abort();
     }
+}
+template <typename T>
+void Graph<T>::dfs_visit(const int &v, std::vector<int> &start_processing, std::vector<int> &end_processing,  int &time)
+{
+    time++;
+    start_processing[v] = time;
+    for (const int &x : vertexTab[v].adjancency_list)
+    {
+        if (start_processing[x] == -1)
+            dfs_visit(x, start_processing, end_processing, time);
+    }
+    time++;
+    end_processing[v] = time;
+    
 }
 #endif // GRAPH_H
