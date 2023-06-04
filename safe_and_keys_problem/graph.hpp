@@ -43,7 +43,11 @@ public:
 
     void dfs();
 
-    
+    template<typename U>
+    friend int dfs2(Graph<U> &graph);
+
+    template<typename U>
+    friend void dfs_visit2(Graph<U> &graph, const int &v, std::vector<int> &chest_list, std::vector<int> &end_processing, const int &v_main);
 
 private:
     inline bool hasVertex(int v);
