@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <cassert>
+#include <chrono>
 #include "graph.hpp"
 
 
@@ -26,10 +27,10 @@ int dfs2(Graph<T> &graph)
         }
         
     }
-    for (auto &x : chest_destroy) {
-        std::cout << x << " | ";
-    }
-    std::cout << std::endl;
+    //for (auto &x : chest_destroy) {
+    //    std::cout << x << " | ";
+    //}
+    //std::cout << std::endl;
     
     int chest_number = std::count(chest_destroy.begin(), chest_destroy.end(), TypeChest::TO_DESTROY);
     std::cout << chest_number << std::endl;
@@ -69,12 +70,12 @@ int solve(int *data, int n) {
         graph.addEdge(data[i]-1, i);
     }
 
-    for (int i = 0; i < n ;++i) {
-        std::cout << i+1 << ": ";
-        for (auto &elem : graph.outConnections(i))
-            std::cout << elem+1 << " ";
-        std::cout << std::endl;
-    }
+    //for (int i = 0; i < n ;++i) {
+     //   std::cout << i+1 << ": ";
+     //   for (auto &elem : graph.outConnections(i))
+     //       std::cout << elem+1 << " ";
+     //   std::cout << std::endl;
+    //}
 
     return dfs2(graph);
 }
@@ -113,11 +114,50 @@ void test(std::string filename) {
     }
     file.close();
 }
+void test_fromFile(std::string filename, int expected_result) {
+        std::ifstream   file (filename);
+        std::string line;
+        int num = 0;
+        int *data = nullptr;
+
+        std::chrono::_V2::steady_clock::time_point begin, end;
+
+
+        if (std::getline(file, line)) {
+            std::stringstream s(line);
+            s >> num;
+        }
+
+        data = new int[num];
+        
+        for (int i = 0; i < num; i++) {
+            if (std::getline(file, line)) {
+                std::stringstream ss(line);
+                ss >> data[i];
+            }
+        }
+        std::cout << "Test file " << filename << std::endl;
+
+        begin = std::chrono::steady_clock::now();
+        assert(expected_result == solve(data, num));
+        end = std::chrono::steady_clock::now();
+
+        std::cout << "Test passed! Elapsed time: " << 
+        std::chrono::duration_cast<std::chrono::milliseconds>(end-begin).count() << " ms"
+        << std::endl;
+
+        delete [] data;
+        data = nullptr;
+
+        file.close();
+}
 int main() {
     test("data.txt");
-
-
-
+    test_fromFile("4_1000.txt", 1000);
+    test_fromFile("5_500.txt", 500);
+    test_fromFile("6_2.txt", 2);
+    test_fromFile("7_31.txt", 31);
+    test_fromFile("8_5041.txt", 5041);
 
 
     return 0;
