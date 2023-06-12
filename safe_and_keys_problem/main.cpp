@@ -54,10 +54,6 @@ void dfs_visit2(Graph<T> &graph, const int &v, std::vector<int> &chest_list, std
         else if (chest_destroy[x] == TypeChest::TO_DESTROY) {
             chest_destroy[x] = TypeChest::VISITED;
         }
-        
-        
-       
-
     }
     
 }
@@ -102,10 +98,13 @@ void test(std::string filename) {
             std::getline(file, line);
             std::stringstream s3(line);
             s3 >> chests_to_destroy;
-    
+
+            std::cout << "----------------------" << std::endl;
             std::cout << "Test nr " << test_counter << std::endl;
             assert(chests_to_destroy == solve(data, num));
             std::cout << "Test nr " << test_counter++ << " passed!" << std::endl;
+            std::cout << "----------------------" << std::endl;
+
 
 
             delete[] data;
@@ -136,6 +135,7 @@ void test_fromFile(std::string filename, int expected_result) {
                 ss >> data[i];
             }
         }
+        std::cout << "----------------------" << std::endl;
         std::cout << "Test file " << filename << std::endl;
 
         begin = std::chrono::steady_clock::now();
@@ -145,19 +145,30 @@ void test_fromFile(std::string filename, int expected_result) {
         std::cout << "Test passed! Elapsed time: " << 
         std::chrono::duration_cast<std::chrono::milliseconds>(end-begin).count() << " ms"
         << std::endl;
+        std::cout << "----------------------" << std::endl;
+
 
         delete [] data;
         data = nullptr;
 
         file.close();
 }
-int main() {
-    test("data.txt");
+
+void extra_tests() {
+    test_fromFile("1_23.txt", 23);
+    test_fromFile("2_3.txt", 3);
+    test_fromFile("3_8.txt", 8);
     test_fromFile("4_1000.txt", 1000);
     test_fromFile("5_500.txt", 500);
     test_fromFile("6_2.txt", 2);
     test_fromFile("7_31.txt", 31);
     test_fromFile("8_5041.txt", 5041);
+
+}
+int main() {
+    test("data.txt");
+    extra_tests();
+    test("test1.txt");
 
 
     return 0;
